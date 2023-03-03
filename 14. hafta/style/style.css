@@ -77,6 +77,11 @@ body { background-color: black !important;}
 }
 
 
+.container-fluid {
+
+    border-bottom: 10px solid;
+}
+
 .flex-container {
 
     border: 2px solid #181515;
@@ -84,7 +89,7 @@ body { background-color: black !important;}
     justify-content: space-around;
     position: absolute;
     bottom: 35px;
-    right: 0;
+    right: 16%;
     background-color: #020202;
     align-items: center;
     border-radius: 8px;

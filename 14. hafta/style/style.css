@@ -100,3 +100,32 @@ body { background-color: black !important;}
 .poster img { width: 100%;}
 .icon { width: 15%;}
 .icon img { width: 100%;}
+
+
+
+#acordion-parent {
+
+    width: 80%;
+    margin: auto;
+}
+
+.accordion-item {
+
+    margin-bottom: 8px;
+}
+
+.accordion-header .accordion-button, .accordion-body, .accordion-item button {
+
+    background-color: gray !important;
+}
+
+.accordion-button:focus, .accordion-button:not(.collapsed) {
+
+    border-color: transparent !important;
+    box-shadow: none !important;
+    color: inherit !important;
+
+}
+
+
+ul li { list-style: none;}

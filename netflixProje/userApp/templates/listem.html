@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+
+
+{% block site-ekstra %}
+  
+<style>
+    .container {
+
+        min-height: 600px;
+    }
+</style>
+{% endblock site-ekstra %}
+
+{% block site-data %}
+
+{% include "partials/_globalHeader.html" %}
+
+
+
+<div class="site-container">
+
+
+
+    <div class="container">
+
+
+        <h3 class="text-light">Listeniz</h3>
+
+        <div class="row mt-1">
+              
+            {% for film in data %}
+         
+            <div class="col-md-2 col-4 mt-1">
+      
+              <p class="text-center text-light"> {{film.movie_name}} </p>
+        
+      
+              <a href="#">
+                  <img src="/{{film.movie_avatar}}" class="w-100 responsive_bg" alt="{{film.movie_name}}">
+              </a>
+      
+      
+              <div class="add-list">
+      
+                <a class="movie-{{film.id}}" href="javascript:void(0);">+</a>
+              </div>
+      
+            </div>
+        
+            {% endfor %}
+            </div>
+
+    </div>
+
+
+</div>
+
+{% endblock site-data %}

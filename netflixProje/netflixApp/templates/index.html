@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block site-data %}
+
+<div class="hero-image">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="" class="navbar-brand"><img src="{% static 'img/netflix_logo.png' %}" alt=""></a>
+            <form class="d-flex" action="">
+                <div class="dropdown">
+                    <a href="" class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span><img src="{% static 'img/world.png' %}" alt=""></span>Türkçe
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a href="" class="dropdown-item">Türkçe</a></li>
+                    <li><a href="" class="dropdown-item">İngilizce</a></li>
+                </ul>
+                </div>
+                <a href="{% url 'giris-yap' %}" class="btn btn-danger mx-3" role="button">Oturum Aç</a>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Hero Text -->
+    <div class="hero-text">
+        <h1>Sınırsız film, dizi ve çok daha fazlası.</h1>
+        <h4>İstediğiniz yerde izleyin. İstediğiniz zaman iptal edin.</h4>
+        <p>İzlemeye hazır mısınız? Üyelik oluşturmak veya üyeliğinze erişmek için e-posta adresinizi girin</p>
+        <div class="input-group mb-3">
+            <input type="text" class="col-sm-8 col-12 form-control mt-3 " placeholder="E-posta adresi" aria-label="Recipient's username"
+            aria-describedby="button-addon2">
+            <button class="col-sm-4 col-12 btn btn-danger mt-3" type="button" id="button-addon2">Başlayın  ></button>
+        </div>
+    </div>
+</div>
+<!-- Container-1 -->
+<div class="container-fluid arkaplan mt-2">
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <br>
+            <div class="text mt-5">
+                <h1>Televizyonunuzda izleyebilirsiniz.</h1>
+                <h3>Akıllı TV, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray oynatıcılar ve daha
+                    fazlasında seyredin.</h3>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <figure class="figure">
+                <img src="{% static 'img/resim1.png' %}" class="figure-img img-fluid rounded" alt="">
+            </figure>
+        </div>
+    </div>
+</div>
+
+<!-- Container-2 -->
+<div class="container-fluid arkaplan mt-2">
+    <div class="row">
+        <div class="col-lg-6 col-12 order-lg-1 order-2">
+            <figure class="figure">
+                <img src="{% static 'img/resim2.jpg' %}" alt="" class="figure-img img-fluid rounded">
+            </figure>
+        </div>
+        <div class="col-lg-6 col-12 order-lg-2 order-1">
+            <br>
+            <div class="text mt-5">
+                <h1>Çevrimdışı izlemek için içerikleri indirin.</h1>
+                <h3>En sevdiğiniz içerikleri kolayca kaydedin ve her zaman izleyecek bir şeyleriniz olsun</h3>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<!-- Container-3 -->
+<div class="container-fluid arkaplan mt-2">
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <br>
+            <div class="text mt-5">
+                <h1>İstediğiniz her yerde izleyin.</h1>
+                <h3>Ekstra ücret ödemeden telefonda, tablette, bilgisayarda, televizyonda sınırsız film ve dizi izleyin.</h3>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-12">
+            <figure class="figure">
+                <img src="{% static 'img/resim3.png' %}" alt="" class="figure-img img-fluid rounded">
+            </figure>
+        </div>
+    </div>
+</div>
+
+
+<!-- Container-4 -->
+<div class="container-fluid arkaplan mt-2">
+    <div class="row">
+        <div class="col-lg-6 col-12 order-lg-1 order-2">
+            <figure class="figure">
+                <img src="{% static 'img/resim4.png' %}" alt="" class="figure-img img-fluid rounded">
+            </figure>
+        </div>
+        <div class="col-lg-6 col-12 order-lg-2 order-1">
+            <br>
+            <div class="text mt-5">
+                <h1>
+                    Çocuklarınız için profiller oluşturun.
+                </h1>
+                <h3>
+                    Üyeliğinize dâhil olan bu ücretsiz deneyim sayesinde çocuklarınız, sadece onlara özel bir alanda en sevdikleri
+                    karakterlerle maceralara atılabilir.
+                </h3>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<!-- Accorddion -->
+<div class="container-fluid arkaplan mt-2">
+    <div class="row w-100">
+        <div class="col-sm-9 col-12 m-auto mt-5">
+            <button class="accordion">Netflix Nedir?</button>
+            <div class="panel">
+                <p>
+                    Netflix; internet bağlantılı binlerce cihazda ödüllü diziler, filmler, animeler, belgeseller ve daha fazlasını içeren
+                    geniş bir arşiv sunan bir yayın hizmetidir.
+                    
+                    Tek bir reklam olmadan, istediğiniz kadar, istediğiniz zaman izleyebilirsiniz - hepsi aylık düşük bir ücret
+                    karşılığında. Her zaman keşfedilecek yeni bir şeyler var, üstelik her hafta yeni diziler ve filmler ekleniyor!
+                </p>
+            </div>
+
+            <button class="accordion mt-2">Netflix'in maliyeti nedir?</button>
+            <div class="panel">
+                <p>
+                    Netflix'i akıllı telefonunuz, tabletiniz, Akıllı TV'niz, dizüstü bilgisayarınız veya yayın cihazınızda sabit bir aylık
+                    ücretle izleyin. Aylık plan ücretleri 26,99 TL ile 54,99 TL arasında değişmektedir. Ekstra maliyet yok, sözleşme yok.
+                </p>
+            </div>
+
+            <button class="accordion mt-2">Nerede izleyebilirim?</button>
+            <div class="panel">
+                <p>
+                    İstediğiniz yerde, istediğiniz zaman izleyin. Bilgisayarınızda netflix.com adresinden veya akıllı TV'ler, akıllı
+                    telefonlar, tabletler, medya oynatıcılar ve oyun konsolları dahil Netflix uygulamasını sunan, internet bağlantılı
+                    herhangi bir cihazda anında izlemek için Netflix hesabınızla oturum açın.
+                    
+                    Favori içeriklerinizi iOS, Android veya Windows 10 uygulamasıyla da indirebilirsiniz. Seyahatteyken ve internet
+                    bağlantısı olmadan izlemek için indirilenleri kullanın. Netflix'i her yere beraberinizde götürün.
+                </p>
+            </div>
+
+            <button class="accordion mt-2">Nasıl iptal ederim?</button>
+            <div class="panel">
+                <p>
+                    Netflix esnektir. Sinir bozucu hiçbir sözleşme ve taahhüt yoktur. Hesabınızı çevrimiçi olarak iki tıklamayla kolayca
+                    iptal edebilirsiniz. İptal ücreti yoktur - hesabınızı istediğiniz zaman başlatın veya durdurun.
+                </p>
+            </div>
+            
+            <button class="accordion mt-2">Netflix'te ne izleyebilirim</button>
+            <div class="panel">
+                <p>
+                    Netflix, uzun metrajlı filmler, belgeseller, diziler ve programlar, anime, ödüllü Netflix orijinal içerikleri ve daha
+                    fazlasından oluşan kapsamlı bir kütüphaneye sahiptir. İstediğiniz her zaman, istediğiniz kadar çok şey izleyin.
+                </p>
+            </div>
+
+            <p class="mt-5 text-light">İzlemeye hazır mısınız? Üyelik oluşturmak veya üyeliğinze erişmek için e-posta adresinizi girin</p>
+            <div class="input-group mb-3">
+                <input type="text" class="col-sm-8 col-12 form-control mt-3 " placeholder="E-posta adresi" aria-label="Recipient's username"
+                aria-describedby="button-addon2">
+                <button class="col-sm-4 col-12 btn btn-danger mt-3" type="button" id="button-addon2">Başlayın  ></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+{% endblock site-data %}

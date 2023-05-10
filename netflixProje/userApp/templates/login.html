@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+
+{% block site-ekstra %}
+  
+
+<style>
+
+#login-form {
+
+    background-color: black;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+</style>
+{% endblock site-ekstra %}
+
+
+{% block site-data %}
+  
+
+<div class="hero-image">
+    <!-- navbar -->
+    <div class="hero-text">
+        <!-- form -->
+        <form action="{% url 'giris-yap' %}" method="POST" class="hero-text2 mt-5 mb-5" id="login-form">
+            {% csrf_token %}
+            
+            <h2>Oturum Aç</h2>
+
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control form-control-lg" placeholder="E-posta veya telefon numarası">
+                <input type="password" name="password" class="form-control form-control-lg mt-5">
+            </div>
+
+            <div class="d-grid gap-2">
+                <button class="btn btn-danger btn-lg" type="submit">Oturum Aç</button>
+            </div>
+
+            <div class="form-check text-start">
+                <input type="checkbox" name="" id="" class="form-check-input">
+                <label for="" class="form-check-label">
+                    Beni Hatırla
+                </label>
+            </div>
+
+            <p class="p-grey">
+                Netflix'e katılmak ister misiniz? <a href="/">Şimdi kaydolun.</a> <br><br>
+                Bu sayfa robot olmadığınızı kanıtlamak için Google reCAPTCHA tarafından korunuyor. Daha fazlasını öğrenin.
+            </p>
+        </form>
+    </div>
+
+
+    </div>
+
+
+{% endblock site-data %}

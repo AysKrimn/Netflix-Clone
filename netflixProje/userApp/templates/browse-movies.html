@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+
+{% block site-data %}
+
+
+{% block site-ekstra %}
+
+
+<style>
+
+    .site-container .container {
+
+        padding: 1rem;
+
+    }
+</style>
+{% endblock site-ekstra %}
+
+
+{% include "partials/_globalHeader.html" %}
+
+
+<div class="site-container">
+
+
+
+<div class="container">
+
+    {% if filmler %}
+      
+    <div class="row mt-1">
+
+      <h3 class="text-light">Filmler</h3>
+        
+      {% for film in filmler %}
+   
+      <div class="col-md-2 col-4 mt-1">
+
+        <p class="text-center text-light"> {{film.movie_name}} </p>
+  
+
+        <a href="#">
+            <img src="/{{film.movie_avatar}}" class="w-100 responsive_bg" alt="{{film.movie_name}}">
+        </a>
+
+
+        <div class="add-list">
+
+          <a class="movie-{{film.id}}" href="javascript:void(0);">+</a>
+        </div>
+
+      </div>
+  
+      {% endfor %}
+      </div>
+
+      {% endif %}
+
+
+
+
+      {% if diziler %}
+      
+      <div class="row mt-5">
+      <h3 class="text-light"> Diziler </h3>
+
+      {% for dizi in diziler %}
+        
+        <div class="col-md-2 col-4 mt-1">
+
+        <p class="text-center text-light"> {{dizi.movie_name}} </p>
+
+          <a href="#">
+            <img src="/{{dizi.movie_avatar}}" class="w-100 responsive_bg" alt="{{dizi.movie_name}}">
+          </a>
+          
+      </div>
+      {% endfor %}
+
+     </div>
+
+     {% endif %}
+
+
+     <div class="row mt-5">
+     <h3 class="text-light"> Sizin için önerilenler</h3>
+
+     <div class="col-md-2 col-4 mt-1">
+          
+      <p class="text-light text-center">FİLM-AD</p>
+      <a href="#">
+          <img src="" class="w-100 responsive_bg" alt="">
+      </a>
+      
+     </div>
+
+
+
+     </div>
+       
+     </div>
+
+    </div>
+
+
+    <script>
+
+    let domain = "http://127.0.0.1:8000/board/index"
+    let parsedDomain = domain.split('/')
+
+    let url = `${parsedDomain[0]}//${parsedDomain[2]}`
+
+    // aları yakala
+    const aTag = document.querySelectorAll('.add-list a') // nodeList dönecek
+    // a etiketlerine iterasyon uygula
+    aTag.forEach(function(a) {
+
+      a.addEventListener('click', async function(event) {
+
+        const elementClass = event.target.className
+        const movieId = elementClass.split('-')[1]
+        const userId = "{{request.user.id}}"
+        
+        const targetURL = `${url}/api/v1/set-list/${movieId}/${userId}`
+        // asenkron bir işlem yap
+        const request = await fetch(targetURL);
+        const data = await request.json()
+
+        console.log("gelen yanıt:", data)
+
+      })
+
+    })
+
+    </script>
+{% endblock site-data %}
+

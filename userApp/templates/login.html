@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block site-ekstra %}
+  
+<style>
+    h2 {
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .hero-image {
+        height: 180%;
+    }
+    .hero-text {
+        background-color: rgba(0, 0, 0, 0.700);
+        width: 500px;
+        top: 30%;
+    }
+    .hero-text2 {
+        width: 75%;
+        margin: auto;
+    }
+    .form-control {
+        background-color: rgb(34, 34, 34);
+        border: none;
+    }
+    .p-grey {
+        color: grey;
+    }
+    .con-footer {
+        position: absolute;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.700);
+    }
+
+    @media screen and (max-width: 700px) {
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)), url(img/arkaplan.jpg);
+        }
+    }
+</style>
+
+{% endblock site-ekstra %}
+
+{% block site-icerigi %}
+  
+<div class="hero-image">
+    <!-- navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="" class="navbar-brand"><img src="img/netflix_logo.png" alt=""></a>
+        </div>
+    </nav>
+
+    <div class="hero-text">
+        <!-- form -->
+        <form action="" class="hero-text2 mt-5 mb-5">
+            <h2>Oturum Aç</h2>
+
+            <div class="mb-3">
+                <input type="text" class="form-control form-control-lg" placeholder="E-posta veya telefon numarası">
+                <input type="password" name="" id="" class="form-control form-control-lg mt-5">
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-danger btn-lg" type="button">Oturum Aç</button>
+            </div>
+
+            <div class="form-check text-start">
+                <input type="checkbox" name="" id="" class="form-check-input">
+                <label for="" class="form-check-label">
+                    Beni Hatırla
+                </label>
+            </div>
+
+            <p class="p-grey">
+                Netflix'e katılmak ister misiniz? Şimdi kaydolun. <br><br>
+                Bu sayfa robot olmadığınızı kanıtlamak için Google reCAPTCHA tarafından korunuyor. Daha fazlasını öğrenin.
+            </p>
+        </form>
+    </div>
+
+     <!-- Footer -->
+ <div class="container-fluid arkaplan mt-2 con-footer">
+    <footer class="row">
+        <p class="mt-5">Sorularınız mı var? 0500 000 00 00 numaralı telefonu arayın</p>
+
+        <div class="col-lg-3 col-6">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2"><a href="" class="nav-link">SSS</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Yatırımcı İlişkileri</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Kullanım Koşulları</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Bize Ulaşın</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2"><a href="" class="nav-link">Yardım Merkezi</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">İş imkanları</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Gizlilik</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Hız Testi</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2"><a href="" class="nav-link">Hesap</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Hediye Kartı Kullan</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Çerez Tercihleri</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Yasal Hükümler</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <ul class="navbar-nav">
+                <li class="nav-item mb-2"><a href="" class="nav-link">Medya Merkezi</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">İzleme Yolları</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Kurumsal Bilgiler</a></li>
+                <li class="nav-item mb-2"><a href="" class="nav-link">Sadece Netflix'te</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <div class="row">
+        <div class="dropdown mb-4">
+            <a href="" class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <span><img src="img/world.png" alt=""></span>Türkçe
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a href="" class="dropdown-item">Türkçe</a></li>
+            <li><a href="" class="dropdown-item">İngilizce</a></li>
+        </ul>
+        </div>
+        <p class="p-footer">Netflix Türkiye (Mervan)</p>
+    </div>
+</div>
+</div>
+
+{% endblock site-icerigi %}

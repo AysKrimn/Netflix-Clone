@@ -26,5 +26,6 @@ urlpatterns = [
     path('', index, name="anasayfa"),
 
     # userApp uygulamasının endpointleri
-    path('login', user_login, name="user_login")
+    path('login', user_login, name="user_login"),
+    path('watch', boardIndex, name="browse-movies")
 ]

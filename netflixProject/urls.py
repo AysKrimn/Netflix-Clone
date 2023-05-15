@@ -27,5 +27,7 @@ urlpatterns = [
 
     # userApp uygulamasının endpointleri
     path('login', user_login, name="user_login"),
-    path('watch', boardIndex, name="browse-movies")
+    path('watch', boardIndex, name="browse-movies"), 
+    path('browseProfile', browseProfile, name='browse-profile'),
+    path('logout', user_logout, name='user_logout')
 ]

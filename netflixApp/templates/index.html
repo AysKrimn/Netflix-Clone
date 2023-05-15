@@ -5,7 +5,15 @@
 <!-- Hero image -->
 <div class="hero-image">
     <!-- Navbar -->
+    {% block nav %} {% endblock nav %}
     <nav class="navbar">
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a href="" class="dropdown-item">Türkçe</a></li>
+            <li><a href="" class="dropdown-item">İngilizce</a></li>
+        </ul>
+        
+        <a href="{% url 'user_login' %}" class="btn btn-danger mx-3" role="button">Oturum Aç</a>
+
         <div class="container">
             <a href="" class="navbar-brand"><img src="img/netflix_logo.png" alt=""></a>
             <form class="d-flex" action="">
@@ -14,12 +22,7 @@
                     aria-expanded="false">
                     <span><img src="img/world.png" alt=""></span>Türkçe
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a href="" class="dropdown-item">Türkçe</a></li>
-                    <li><a href="" class="dropdown-item">İngilizce</a></li>
-                </ul>
-                </div>
-                <a href="{% url 'user_login' %}" class="btn btn-danger mx-3" role="button">Oturum Aç</a>
+               
             </form>
         </div>
     </nav>

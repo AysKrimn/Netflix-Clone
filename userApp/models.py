@@ -4,6 +4,11 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class NetflixUser(AbstractUser):
     avatar = models.FileField(("User Avatar"), upload_to="Avatar", max_length=100)
+    profile = models.ManyToManyField("userApp.NetflixProfile", verbose_name=("Userin Alt Hesapları"))
+
+# profil kısmı
+class NetflixProfile(models.Model):
+    pass
 
 # kategoriler
 class Categories(models.Model):

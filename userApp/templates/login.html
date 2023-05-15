@@ -46,11 +46,11 @@
   
 <div class="hero-image">
     <!-- navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="" class="navbar-brand"><img src="img/netflix_logo.png" alt=""></a>
-        </div>
-    </nav>
+
+
+    {% block nav %}
+      
+    {% endblock nav %}
 
     <div class="hero-text">
         <!-- form -->
@@ -63,7 +63,7 @@
                 <input type="password" name="password" class="form-control form-control-lg mt-5">
             </div>
             <div class="d-grid gap-2">
-                <button class="btn btn-danger btn-lg" type="button">Oturum Aç</button>
+                <button class="btn btn-danger btn-lg" type="submit">Oturum Aç</button>
             </div>
 
             <div class="form-check text-start">

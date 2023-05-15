@@ -16,8 +16,13 @@
 </head>
 <body>
     
-    {% include "partials/_nav.html" %}
+   
 
+    {% block nav %}
+    {% include "partials/_nav.html" %}
+    {% endblock nav %}
+
+    
     {% block site-icerigi %}
       
     {% endblock site-icerigi %}

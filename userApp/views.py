@@ -15,14 +15,29 @@ def user_login(request):
             if user:
                 login(request, user)
                 # film sekmesine yönlendir.
-                return redirect('browse-movies')
+                return redirect('browse-profile')
     else:
         # get istekleri
         return render(request, 'login.html')
 
 
+# hesapların seçildiği alan
+def browseProfile(request):
+    return render(request, 'browseProfile.html')
 
 
 # filmlerin yüklendiği sayfa
 def boardIndex(request):
     return render(request, 'browse-index.html')
+
+
+
+# user çıkış yapmışsa
+def user_logout(request):
+
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect('anasayfa')
+    
+    else:
+        return redirect('user_login')

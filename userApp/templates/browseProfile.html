@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block site-ekstra %}
   
 
@@ -19,6 +19,12 @@
         transform: translate(0px,45%);
     }
 
+
+    .responsive {
+
+        height: 183px;
+        object-fit: cover;
+    }
 </style>
 
 {% endblock site-ekstra %}
@@ -29,22 +35,75 @@
 
 {% block nav %} {% endblock nav %}
 
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        
+        <form id="createProfile" action="{% url 'browse-profile' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- form fieldleri gelecek -->
+                {{form}}
+       
+
+
+       
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+       
+       
+        </div>
+
+        </form>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
 <div class="container">
     <div id="profileSection" class="row w-75 m-auto bg-black bg-opacity-25">
         <h1 class="text-center text-light">Kimler İzliyor?</h1>
 
+
+        {% for profile in profiles  %}
+          
+    
         <div class="col-3 mt-5 mb-5">
-            <a href="browse-index.html" class="text-decoration-none text-secondary">
+            <a href="{% url 'browse-movies' profile.id %}" class="text-decoration-none text-secondary">
                 <div class="card bg-transparent">
-                    <img src="img/smile-icon.jpg" class="card-img-top" alt="">
+                    <img src="{{profile.handleAvatar}}" class="card-img-top responsive" alt="{{profile.name}}">
                     <div>
-                        <h5 class="card-title text-center ">Mervan</h5>
+                        <h5 class="card-title text-center ">{{profile.name}}</h5>
                     </div>
                 </div>
             </a>
         </div>
 
-        
+        {% endfor %}
+
+        <!-- profil oluştur -->
+        <div class="col-3 mt-5 mb-5">
+            <a href="#" type="button" class="text-decoration-none text-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <div class="card bg-transparent">
+                    <img src="{% static 'img/addMore.png' %}" class="card-img-top" alt="">
+                </div>
+            </a>
+        </div>
+
+
 
         <div class="buton mb-5 text-center">
             <button class="bg-dark text-secondary w-50 p-2 ">Profil Yönetimi</button>
@@ -52,4 +111,19 @@
     </div>
 </div>
   
+
+
+
+<script>
+
+document.querySelectorAll('#createProfile input').forEach(input => {
+
+    input.classList.add('form-control')
+    input.style.marginBottom = '8px'
+
+})
+
+</script>
+
+
 {% endblock site-icerigi %}

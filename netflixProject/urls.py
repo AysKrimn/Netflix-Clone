@@ -21,13 +21,18 @@ from django.urls import path
 from netflixApp.views import *
 from userApp.views import *
 
+# settingsden gelen dosyalar
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name="anasayfa"),
 
     # userApp uygulamasının endpointleri
     path('login', user_login, name="user_login"),
-    path('watch', boardIndex, name="browse-movies"), 
+    path('watch/<userId>', boardIndex, name="browse-movies"), 
     path('browseProfile', browseProfile, name='browse-profile'),
     path('logout', user_logout, name='user_logout')
-]
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

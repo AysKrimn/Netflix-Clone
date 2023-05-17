@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+
+# gerekli formları al
+from .form import *
+
 # Create your views here.
 def user_login(request):
 
@@ -23,11 +27,30 @@ def user_login(request):
 
 # hesapların seçildiği alan
 def browseProfile(request):
-    return render(request, 'browseProfile.html')
+    context = {}
+    
+    form = CreateProfile()
+
+    if request.method == 'POST':
+        form = CreateProfile(request.POST, request.FILES)
+        # verileri oluştur ama veritabanına kayıt etme
+        instances = form.save(commit=False)
+        instances.user = request.user
+        instances.save()
+
+        # profili ana hesap ile bağdaştır
+        request.user.profile.add(instances)
+        # aynı sayfaya yönlendir
+        return redirect('browse-profile')
+    else:
+        # get istekleri
+          context['form'] = form
+          context['profiles'] = request.user.profile.all()
+          return render(request, 'browseProfile.html', context)
 
 
 # filmlerin yüklendiği sayfa
-def boardIndex(request):
+def boardIndex(request, userId):
     return render(request, 'browse-index.html')
 
 

@@ -7,48 +7,26 @@
   <div class="container">
       <div class="row mt-5">
 
-        <h3 class="text-light">Netflix'te Popüler</h3>
+        <h3 class="text-light">Filmler</h3>
 
+        {% for film in filmler %}
+          
         <div class="col-md-2 col-4 mt-1">
             <a href="video.html">
-                <img src="img/film1.jpg" class="w-100" alt="">
+                <img src="/{{film.movie_cover}}" class="w-100 image-banner" alt="{{film.movie_title}}">
             </a>
+            <p class="text-center text-light mt-1">{{film.movie_title}}</p>
         </div>
 
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film1.jpg" class="w-100" alt="">
-            </a>
-        </div>
+        {% endfor %}
 
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film1.jpg" class="w-100" alt="">
-            </a>
-        </div>
+       
 
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film1.jpg" class="w-100" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film1.jpg" class="w-100" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film1.jpg" class="w-100" alt="">
-            </a>
-        </div>
 
       </div>
 
       <div class="row mt-5">
-          <h3 class="text-light"> Gündemdekiler</h3>
+          <h3 class="text-light"> Diziler</h3>
 
           <div class="col-md-2 col-4 mt-1">
             <a href="video.html">
@@ -56,36 +34,9 @@
             </a>
         </div>
 
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film2.jpg" class="w-100" alt="">
-            </a>
-        </div>
+        
+  </div>
 
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film3.jpg" class="w-100" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film4.webp" class="w-100" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film1.jpg" class="w-100" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-2 col-4 mt-1">
-            <a href="video.html">
-                <img src="img/film1.jpg" class="w-100" alt="">
-            </a>
-        </div>
-      </div>
   </div>
 
 {% endblock site-icerigi %}

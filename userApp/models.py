@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 class NetflixUser(AbstractUser):
     profile = models.ManyToManyField("userApp.NetflixProfile", verbose_name=("Userin Alt Hesapları"))
 
+
+
 # profil kısmı
 class NetflixProfile(models.Model):
     # favoriye alınan filmler/diziler
@@ -19,7 +21,7 @@ class NetflixProfile(models.Model):
     
     def handleAvatar(self):
        if self.avatar:
-          return self.avatar
+          return "/{path}".format(path=self.avatar)
        else:
           return "/static/img/smile-icon.jpg"
 

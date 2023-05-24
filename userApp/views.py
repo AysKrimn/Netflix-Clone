@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 
 # gerekli formları al
 from .form import *
+from .models import *
 
 # Create your views here.
 def user_login(request):
@@ -22,6 +23,11 @@ def user_login(request):
                 return redirect('browse-profile')
     else:
         # get istekleri
+        # eğer kullanıcı giriş yapmışsa burayı görmesini engelle
+        if request.user.is_authenticated:
+             return redirect('browse-profile')
+        
+        # login olmamışsa login olsun:
         return render(request, 'login.html')
 
 
@@ -37,21 +43,26 @@ def browseProfile(request):
         instances = form.save(commit=False)
         instances.user = request.user
         instances.save()
-
-        # profili ana hesap ile bağdaştır
-        request.user.profile.add(instances)
         # aynı sayfaya yönlendir
         return redirect('browse-profile')
     else:
         # get istekleri
           context['form'] = form
-          context['profiles'] = request.user.profile.all()
+          context['profiles'] = NetflixProfile.objects.filter(user_id=request.user.id)
           return render(request, 'browseProfile.html', context)
 
 
-# filmlerin yüklendiği sayfa
-def boardIndex(request, userId):
-    return render(request, 'browse-index.html')
+# filmlerin yüklendiği sayfa (feed)
+def boardIndex(request, profileId):
+    context = {}
+   
+    selectedProfile = NetflixProfile.objects.filter(id=profileId).first()
+    context['profile'] = selectedProfile
+
+    # filmler
+    context['filmler'] = Movies.objects.filter(movie_type=1)
+
+    return render(request, 'browse-index.html', context)
 
 
 

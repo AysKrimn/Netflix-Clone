@@ -30,9 +30,10 @@
         <ul class="navbar-nav">
           <li class="nav-item dropdown" style="margin-right: 100px;">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="{% static 'img/smile-profil.png' %}" alt="">
+              <img class="user_avatar" src="{{profile.handleAvatar}}" alt="user_avatar">
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'browse-profile' %}">Oturum: {{profile.name}}</a></li>
               <li><a class="dropdown-item" href="{% url 'browse-profile' %}">Profil Yönetimi</a></li>
               <li>
                   <hr class="dropdown-divider">

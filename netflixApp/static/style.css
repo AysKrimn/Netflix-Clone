@@ -91,9 +91,22 @@ footer .nav-link:hover {
 .container {
 
     min-height: 900px;
-    margin-top: 5rem;
+    margin-top: 7rem;
 }
 
+
+.image-banner {
+
+    height: 135px;
+    max-height: 135px;
+    object-fit: cover;
+}
+
+
+.user_avatar {
+    width: 60px;
+
+}
 
 @media screen and (max-width: 992px) {
     .text {

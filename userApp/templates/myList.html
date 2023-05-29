@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+
+
+{% block site-ekstra %}
+
+
+<style>
+
+.img-container {
+
+  position: relative;
+}
+
+
+.img-container span {
+
+  position: absolute;
+    top: 2px;
+    right: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+
+</style>
+{% endblock site-ekstra %}
+
+
+
+{% block site-icerigi %}
+  
+
+
+  <div class="container">
+
+    <h1 class="text-light">Listem</h1>
+
+    <div class="row mt-5">
+
+      {% for film in movies %}
+        
+
+      <div class="col-md-2 col-4 mt-1">
+
+        <div class="img-container">
+
+          <img src="/{{film.movie_cover}}" class="w-100 image-banner" alt="{{film.movie_title}}">
+          <span onclick="removeList('{{profile.id}}', '{{film.id}}')">ÇIKAR</span>
+
+        </div>
+      
+
+         <p class="text-center text-light mt-1">{{film.movie_title}}</p>
+      </div>
+
+      {% endfor %}
+
+      
+    </div>
+
+  </div>
+
+
+
+
+  <script>
+
+   async function removeList(profileId, movieId) {
+
+      const endpoint = `http://127.0.0.1:8000/api/v1/users/${profileId}/removeItem/${movieId}`
+
+      const request = await fetch(endpoint);
+      const data = await request.json();
+
+      console.log("serverden gelen veri:", data)
+
+      // api isteği yap
+
+    }
+  </script>
+
+
+{% endblock site-icerigi %}

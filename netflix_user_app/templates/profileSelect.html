@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Seçimi</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+  
+
+        html,body {
+
+          height: 100%;
+        }
+
+        body {
+
+          background-color: #141414 !important;
+        }
+
+        .profile-container {
+
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+        }
+
+
+        .card img:hover {
+            border: 4px solid white;
+        }
+        
+        button:hover {
+            border: 1px solid white;
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+
+
+  <!-- modal -->
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'user-profile-select' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+      
+          {{form}}
+   
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    
+      </form>
+      </div>
+  
+
+    </div>
+  </div>
+</div>
+    <!-- profil seçimi -->
+    <div class="profile-container">
+
+
+    <div class="container">
+        <div class="row w-75 m-auto bg-black bg-opacity-25">
+            <h1 class="text-center text-light mt-3">Kimler İzliyor?</h1>
+
+
+            {% for profile in request.user.profile.all %}
+            <div class="col-3 mt-5 mb-5">
+                <a href="{% url 'user-dashboard' profile.id %}" class="text-decoration-none text-secondary">
+
+                  
+                    <div class="card bg-transparent">
+                        <img style="aspect-ratio: 1/1;" src="{{profile.avatar.url}}" class="card-img-top" alt="">
+                        <div>
+                            <h5 class="card-title text-center ">{{profile.name}}</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+  
+              
+            {% endfor %}
+            
+            <div class="col-3 mt-5 mb-5">
+            
+              <button  style="background-color: transparent; border: 1px solid gray;" 
+              
+                {% if request.user.profile.count < 5 %}
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                {% else %}
+                  disabled title="Maksimum 5 hesap açabilirsiniz"
+                {% endif %}
+                
+
+               >
+                
+               <img src="{% static 'image/plus.png' %}" alt="add">
+              
+              </button>
+            </div>
+
+            <div class="buton mb-5 text-center">
+                <button class="bg-dark text-secondary w-50 p-2 ">Profil Yönetimi</button>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+     <!-- JavaScript Bundle with Popper -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+     <script>
+
+      document.querySelectorAll("form input, textarea").forEach((element) => {
+
+        element.classList.add('form-control')
+      })
+     </script>
+
+    </body>
+</html>

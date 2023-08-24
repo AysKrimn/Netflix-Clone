@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block site-baslik %}
+  AnaSayfa
+{% endblock site-baslik %}
+
+{% block site-icerik %}
+  
+  <!-- hero wallpaper -->
+  <div class="hero-image">
+
+      <div class="hero-text">
+        <video id="netflix_video" src="{% static './videos/pozhen.mp4' %}" muted></video>
+  
+
+
+      <div class="video-option">
+
+
+              <i id="playButton" class="fa-solid fa-lg fa-rotate-right"></i>
+              <i id="audio" class="fa-solid fa-lg fa-volume-xmark"></i>
+     
+          
+      </div>
+
+  </div>
+
+
+  </div>
+
+
+      <div class="row">
+
+      
+        {% for category, movies in ogeler %}
+        <h3>{{category.type}}</h3>
+ 
+      
+        {% for movie in movies %}
+        <div class="col-3 ms-3 mt-5">
+    
+        <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+      <div class="card">
+              <img src="{{movie.movie_image.url}}" class="card-img-top" alt="buz">
+              <div class="card-body">
+                  <div class="card-options">
+                      <i class="fa-solid fa-play"></i>
+                      <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                      <i class="fa-solid fa-thumbs-up"></i>
+                      <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-chevron-down"></i>
+                  </div>
+
+                  <div class="card-genres">
+                  
+                      <ul>
+                          <li>Psikolojik</li>
+                          <li>Aksiyon</li>
+                      </ul>
+                  </div>
+
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+      </div>
+
+      </div>
+      {% endfor %}
+
+
+
+      {% endfor %}
+ 
+      </div>
+ 
+  <script>
+
+   const cardBody = document.querySelectorAll('.card-body')
+
+   document.querySelectorAll('.card').forEach(cardDiv => {
+
+
+      cardDiv.onmouseenter = function(e) {
+          console.log("chilD:", e.target.children[1])
+          const target = e.target.children[1]
+          target.style.opacity = 1
+      }
+
+
+      cardDiv.onmouseleave = function(e) {
+
+          const target = e.target.children[1]
+          target.style.opacity = 0
+      }
+
+   })
+
+  </script>
+
+
+
+  <script>
+          const video = document.getElementById("netflix_video");
+          const playButton = document.getElementById('playButton');
+          const audioBtn = document.getElementById('audio')
+
+          function playVideo() {
+
+              video.play();
+
+          }
+
+          document.body.onload = playVideo
+
+          video.addEventListener('ended', function () {
+              // Video bittiğinde butonu gösteriyoruz
+              playButton.style.display = 'revert';
+          });
+          
+          audioBtn.addEventListener('click', function() {
+
+              video.muted = !video.muted;
+
+             
+              if (video.muted == false) {
+                  audioBtn.className = 'fa-solid fa-lg fa-volume-off'
+
+              } else {
+        
+                  audioBtn.className = "fa-solid fa-lg fa-volume-xmark"
+              }
+            
+              video.volume = 0.5
+    
+             
+          })
+
+          playButton.addEventListener('click', function () {
+          video.currentTime = 0;
+          video.play();
+          playButton.style.display = 'none'; // Butonu tekrar gizliyoruz
+
+          });
+
+      
+  </script>
+
+  
+{% endblock site-icerik %}

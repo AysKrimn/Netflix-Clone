@@ -1,0 +1,36 @@
+{% load static %}
+<nav id="site-nav" class="navbar navbar-expand-lg bg-body-tertiary">
+
+    <div class="container-fluid">
+      <a id="logo" class="navbar-brand" href="#">
+        
+        <img src="{% static './image/logo.png' %}" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+ 
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     
+        <div class="dropdown profile-menu">
+            <span class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+             
+                <img class="user_avatar" src="{{profile.avatar.url}}" alt="pp">
+            </span>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li class="text-center">Oturum: {{profile.name}}</li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item active" href="{% url 'user-profile-select' %}">Hesap Değiştir</a></li>
+              <li><a class="dropdown-item" href="#">Profilim</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'user-logout' %}">Oturumu Kapat</a></li>
+            </ul>
+        
+        </div>
+  
+    
+      </div>
+    </div>
+  </nav>

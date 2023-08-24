@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+
+{% block site-baslik %}
+  Giriş Yap
+{% endblock site-baslik %}
+
+
+{% block site-icerik %}
+
+
+
+
+<div class="hero">
+
+
+    <div class="loginContainer">
+
+    
+    <div class="text">
+        <h3>Oturum Aç</h3>
+    </div>
+   
+
+    <form action="{% url 'user-login' %}" method="post">
+        {% csrf_token %}
+        {% for message in messages %}
+          
+        {% if message.tags == 'SUCCESS' %}
+        <p class="text-success">{{message}}</p>
+
+        {% else %}
+
+        <p class="text-danger"> {{message}}</p>
+        {% endif %}
+      
+        
+        {% endfor %}
+
+
+        <div>
+            <input required name="username" type="text" placeholder="Kullanıcı Adınız">
+        </div>
+
+        <div>
+            <input required name="password" type="password" placeholder="Şifreniz">
+        </div>
+
+        <div class="mb-3">
+
+            <p class="info-msg">
+                Hesabınız yoksa buradan
+                <a href="{% url 'user-register' %}">kayıt olabilirsiniz</a>
+            </p>
+
+            <p class="info-msg">
+
+                Şifrenizi unuttuysanız buradan <a href="#">sıfırlayın</a>
+            </p>
+        </div>
+   
+        <div class="login">
+            <button type="submit">Oturum Aç</button>
+        </div>
+    </div>
+
+    </form>
+
+</div>
+{% endblock site-icerik %}

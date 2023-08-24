@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+
+{% block site-baslik %}
+  Kayıt Ol
+{% endblock site-baslik %}
+
+{% block site-icerik %}
+
+
+<div class="hero">
+
+
+    <div class="loginContainer">
+
+    
+    <div class="text">
+        <h3>Kayıt Ol</h3>
+    </div>
+   
+
+    <form action="{% url 'user-register' %}" method="post">
+        {% csrf_token %}
+        <!-- flash mesajari -->
+        {% for message in messages  %}
+          
+        <p class="text-danger">{{message}}</p>
+        {% endfor %}
+
+        <div>
+            <input name="email" type="email" placeholder="email" required>
+        </div>
+
+        <div>
+            <input name="username" type="text" placeholder="kullanıcı adınız" required>
+        </div>
+
+        <div>
+            <input name="password" type="password" placeholder="şifreniz" required>
+        </div>
+
+
+        <div class="mt-2 text-start">
+
+            <p class="info-msg"> 
+                Zaten bir hesabın var mı? buradan
+                <a href="{% url 'user-login' %}">giriş yap</a>
+            </p>
+        </div>
+
+
+        <div class="login">
+            <button type="submit">Kayıt Ol</button>
+        </div>
+
+
+
+
+
+    </div>
+
+    </form>
+
+</div>
+
+
+{% endblock site-icerik %}

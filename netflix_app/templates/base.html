@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+    {% block site-baslik %}{% endblock site-baslik %}
+    </title>
+
+
+    <!-- fa -->
+    <script src="https://kit.fontawesome.com/51d8bd5107.js" crossorigin="anonymous"></script>
+    <!-- bs -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <!-- custom css -->
+    {% if request.path == '/' %}
+    
+    <link rel="stylesheet" href="{% static 'style/index.css' %}">
+
+    {% else %}
+
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+
+    {% endif %}
+    
+
+    {% block ekler %} {% endblock ekler %}
+</head>
+<body>
+    
+    <!-- nav -->
+ 
+
+
+
+    {% if request.user.is_authenticated %}
+
+    {% include "./Components/_nav.html" %}
+
+    {% else %}
+      
+    <div class="n-logo">
+
+        <a href="{% url 'homepage' %}">
+            <img src="{% static 'image/logo.png' %}" alt="logo">
+        </a>
+      
+    </div>
+
+    {% endif %}
+    
+
+
+
+
+    {% block site-icerik %}
+      
+    {% endblock site-icerik %}
+
+
+    <!-- bs script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+</html>

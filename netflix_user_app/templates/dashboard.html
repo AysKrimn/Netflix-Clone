@@ -31,26 +31,27 @@
   </div>
 
 
-      <div class="row">
+      <div class="row" style="margin-top: 7rem;">
 
       
         {% for category, movies in ogeler %}
-        <h3>{{category.type}}</h3>
+        <h3 class="ms-3 text-light">{{category.type}}</h3>
  
       
         {% for movie in movies %}
-        <div class="col-3 ms-3 mt-5">
+        <div class="col-3 ms-3 mb-5">
     
         <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="exampleModal-{{movie.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{movie.movie_name}}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            ...
+          
+            <iframe width="100%" src="{{movie.movie_source}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -65,10 +66,13 @@
               <img src="{{movie.movie_image.url}}" class="card-img-top" alt="buz">
               <div class="card-body">
                   <div class="card-options">
+                      <!-- filmi aç -->
                       <i class="fa-solid fa-play"></i>
-                      <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
-                      <i class="fa-solid fa-thumbs-up"></i>
-                      <i data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-solid fa-chevron-down"></i>
+                      <!-- listeye ekle -->
+                      <i onclick="add_list('{{profile.id}}', '{{movie.id}}')" class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                      <!-- begen -->
+                      <i onclick="like_movie('{{movie.id}}')" class="fa-solid fa-thumbs-up"></i>
+                      <i data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
                   </div>
 
                   <div class="card-genres">
@@ -103,6 +107,7 @@
           console.log("chilD:", e.target.children[1])
           const target = e.target.children[1]
           target.style.opacity = 1
+          target.style.visibility = "visible"
       }
 
 
@@ -110,6 +115,7 @@
 
           const target = e.target.children[1]
           target.style.opacity = 0
+          target.style.visibility = "hidden"
       }
 
    })
@@ -164,5 +170,32 @@
       
   </script>
 
+
+<script>
+
+async function like_movie(movieId) {
+
+  const request = await fetch(`http://127.0.0.1:8000/v1/api/movies/${movieId}/like`)
+  const response = await request.json()
+
+  console.log("svden gelen veri:", response)
+  if (response.message === "Movie is liked") {
+
+    alert(response.message)
+  }
+
+}
+
+
+async function add_list(profileId, movieId) {
+
+  const request = await fetch(`http://127.0.0.1:8000/v1/api/movies/profiles/${profileId}/item/${movieId}/add`)
+  const response = await request.json()
+
+  console.log("svden gelen veri:", response)
+
+}
+
+</script>
   
 {% endblock site-icerik %}

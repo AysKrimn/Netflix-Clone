@@ -22,7 +22,8 @@ from django.urls import path
 from netflix_app.views import *
 # userapp'in viewlerini çek
 from netflix_user_app.views import *
-
+# netflix_Api viewleri
+from netflix_api.views import *
 
 # resim icin konfigürasyon
 from django.conf import settings
@@ -40,6 +41,11 @@ urlpatterns = [
 
     path('register', user_register, name="user-register"),
     path('browse/watch/<profileId>', user_dashboard, name="user-dashboard"),
-    path('profile/select', user_profile_select, name="user-profile-select")
+    path('profile/select', user_profile_select, name="user-profile-select"),
     # netflix_user_app burada biter
+
+    # netflix_api 
+    path("v1/api/movies/<movieId>/like", likeMovie, name="like-movie"),
+    path("v1/api/movies/profiles/<profileId>/item/<movieId>/add", addList, name="add-list")
+    # netflix_api endpointleri biter
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

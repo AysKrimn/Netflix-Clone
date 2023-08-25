@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'netflix_app',
-    'netflix_user_app'
+    'netflix_user_app',
+    'netflix_api'
 ]
 
 MIDDLEWARE = [

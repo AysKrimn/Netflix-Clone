@@ -149,5 +149,9 @@ def user_dashboard(request, profileId):
         context["ogeler"] = movies.items()
 
 
+    # rastgele source
+    randomMovie = Movies.objects.all().order_by("?").first()
+    context["random"] = randomMovie
+
     print("bulunan filmler:", movies)
     return render(request, 'dashboard.html', context)

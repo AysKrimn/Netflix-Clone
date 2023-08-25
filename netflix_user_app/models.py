@@ -32,13 +32,7 @@ class Movies(models.Model):
             return self.movie_name
 
 
-# listem kısmı
-class NetflixProfileList(models.Model):
-      profile = models.ForeignKey("netflix_user_app.NetflixProfile", verbose_name=("User"), on_delete=models.CASCADE)
-      movie = models.ForeignKey(Movies, verbose_name=("Film"), on_delete=models.CASCADE)
 
-      def __str__(self) -> str:
-            return self.profile.name
       
 class NetflixProfile(models.Model):
     # profil  
@@ -46,7 +40,7 @@ class NetflixProfile(models.Model):
     name = models.CharField(("Hesap Adı"), max_length=50)
     avatar = models.FileField(("Fotoğraf"), upload_to="Avatars", default="/static/image/avatar.png", max_length=100, blank=True)
     # dizi, film listesi
-    list = models.ManyToManyField(NetflixProfileList, verbose_name=("Liste"), blank=True)
+    list = models.ManyToManyField(Movies, verbose_name=("Liste"), blank=True)
     # hesaba şifre konulacak
     # fav
 

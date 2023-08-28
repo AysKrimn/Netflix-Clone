@@ -11,8 +11,8 @@
   <!-- hero wallpaper -->
   <div class="hero-image">
 
-      <div class="hero-text">
-        <video id="netflix_video" src="{% static './videos/pozhen.mp4' %}" muted></video>
+      <div class="hero-text" style="width: 100%;">
+        <video width="100%" id="netflix_video" src="{{randomBanner.movie_source.url}}" muted></video>
   
 
 
@@ -50,9 +50,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-          
-            <iframe width="100%" src="{{movie.movie_source}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+            <video id="movie-{{movie.id}}" width="100%" src="{{ movie.movie_source.url}}" muted></video>
           </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary">Save changes</button>
@@ -64,7 +65,7 @@
 
       <div class="card">
               <img src="{{movie.movie_image.url}}" class="card-img-top" alt="buz">
-              <div class="card-body">
+              <div class="card-body" style="width: 100%;">
                   <div class="card-options">
                       <!-- filmi aç -->
                       <i class="fa-solid fa-play"></i>
@@ -72,18 +73,23 @@
                       <i onclick="add_list('{{profile.id}}', '{{movie.id}}')" class="fa-solid fa-plus" style="color: #ffffff;"></i>
                       <!-- begen -->
                       <i onclick="like_movie('{{movie.id}}')" class="fa-solid fa-thumbs-up"></i>
-                      <i data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
+                      <i onclick="playShortVideo('{{movie.id}}')" data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
                   </div>
 
                   <div class="card-genres">
                   
                       <ul>
-                          <li>Psikolojik</li>
-                          <li>Aksiyon</li>
+
+                          {% for etiket in movie.movie_categories.all %}
+
+                          <li>{{etiket}}</li>
+
+                          {% endfor %}
+                        
                       </ul>
                   </div>
 
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">{{movie.movie_description}}</p>
               </div>
       </div>
 
@@ -96,44 +102,27 @@
  
       </div>
  
-  <script>
-
-   const cardBody = document.querySelectorAll('.card-body')
-
-   document.querySelectorAll('.card').forEach(cardDiv => {
 
 
-      cardDiv.onmouseenter = function(e) {
-          console.log("chilD:", e.target.children[1])
-          const target = e.target.children[1]
-          target.style.opacity = 1
-          target.style.visibility = "visible"
-      }
-
-
-      cardDiv.onmouseleave = function(e) {
-
-          const target = e.target.children[1]
-          target.style.opacity = 0
-          target.style.visibility = "hidden"
-      }
-
-   })
-
-  </script>
-
-
+  <script src="{% static 'scripts/cardHover.js' %}"></script>
+  <script src="{% static 'scripts/likeMovie.js' %}"></script>
+  <script src="{% static 'scripts/addList.js' %}"></script>
+  <script src="{% static 'scripts/playTrailer.js' %}"></script>
 
   <script>
           const video = document.getElementById("netflix_video");
           const playButton = document.getElementById('playButton');
           const audioBtn = document.getElementById('audio')
 
+          // banner oynat
           function playVideo() {
 
               video.play();
 
           }
+
+      
+
 
           document.body.onload = playVideo
 
@@ -171,31 +160,6 @@
   </script>
 
 
-<script>
 
-async function like_movie(movieId) {
-
-  const request = await fetch(`http://127.0.0.1:8000/v1/api/movies/${movieId}/like`)
-  const response = await request.json()
-
-  console.log("svden gelen veri:", response)
-  if (response.message === "Movie is liked") {
-
-    alert(response.message)
-  }
-
-}
-
-
-async function add_list(profileId, movieId) {
-
-  const request = await fetch(`http://127.0.0.1:8000/v1/api/movies/profiles/${profileId}/item/${movieId}/add`)
-  const response = await request.json()
-
-  console.log("svden gelen veri:", response)
-
-}
-
-</script>
   
 {% endblock site-icerik %}

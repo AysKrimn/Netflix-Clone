@@ -246,3 +246,10 @@ html, body {
     max-height: 60px;
     object-fit: contain;
 }
+
+
+.my-menu a {
+
+    padding: 8px;
+    text-decoration: none;
+}

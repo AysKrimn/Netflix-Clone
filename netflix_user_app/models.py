@@ -26,7 +26,7 @@ class Movies(models.Model):
       movie_image = models.FileField(("Banner"), upload_to="Uploads", max_length=100)
       movie_likes = models.PositiveIntegerField(default=0)
       movie_categories = models.ManyToManyField(MovieCategories, verbose_name=("Etiketler"))
-      movie_source = models.URLField(("Kaynak"), max_length=200, blank=True, help_text="Filmin URL'i")
+      movie_source = models.FileField(("Kaynağı"), upload_to="Videos", max_length=100, blank=True)
 
       def __str__(self) -> str:
             return self.movie_name

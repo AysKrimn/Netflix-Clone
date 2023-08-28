@@ -151,7 +151,48 @@ def user_dashboard(request, profileId):
 
     # rastgele source
     randomMovie = Movies.objects.all().order_by("?").first()
-    context["random"] = randomMovie
+    context["randomBanner"] = randomMovie
 
     print("bulunan filmler:", movies)
     return render(request, 'dashboard.html', context)
+
+
+# kategoriye göre sırala
+# sadece filmler
+def only_film(request, categoryId):
+    context = {}
+
+    # ilgili kategoriyi yakala
+    types = MovieTypes.objects.filter(id = categoryId)
+
+    movies = {}
+
+    for tur in types:
+
+        movie = Movies.objects.filter(movie_type = tur)
+        movies[tur] = movie
+    else:
+        context["ogeler"] = movies.items()
+
+    # random banner
+    randomMovie = Movies.objects.filter(movie_type__id = categoryId).order_by("?").first()
+    context["randomBanner"] = randomMovie
+        
+    return render(request, 'dashboard.html', context)
+
+
+
+
+# user-list
+def userList(request, profileId):
+    context = {}
+
+    selectedProfile = NetflixProfile.objects.filter(id = profileId).first()
+
+    if selectedProfile:
+
+        context['movies'] = selectedProfile.list.all() 
+        context['profile'] = selectedProfile
+
+
+    return render(request, 'user_list.html', context)

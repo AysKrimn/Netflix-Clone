@@ -42,6 +42,8 @@ urlpatterns = [
     path('register', user_register, name="user-register"),
     path('browse/watch/<profileId>', user_dashboard, name="user-dashboard"),
     path('profile/select', user_profile_select, name="user-profile-select"),
+    path('genres/<categoryId>', only_film, name="movie-category"),
+    path('profile/<profileId>/my-list', userList, name="user-list"),
     # netflix_user_app burada biter
 
     # netflix_api 

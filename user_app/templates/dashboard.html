@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+
+{% block header-content %}
+  
+{% endblock header-content %}
+
+
+{% block site-icerik %}
+    <!-- hero wallpaper -->
+    <div class="hero-image">
+
+        <div class="hero-text">
+          <video width="100%" id="netflix_video" src="{{randomBanner.movie_source.url}}" muted></video>
+    
+
+
+        <div class="video-option">
+
+
+                <i id="playButton" class="fa-solid fa-lg fa-rotate-right"></i>
+                <i id="audio" class="fa-solid fa-lg fa-volume-xmark"></i>
+       
+            
+        </div>
+
+    </div>
+
+
+    </div>
+
+
+    <div class="row">
+
+
+      {% for category, movies in dynamic %}
+
+     
+        
+      <h3 class="text-light ms-3">{{category}}</h3>
+
+        
+    
+<!-- filmleri döngüye sok -->
+{% for movie in movies %}
+<div class="col-3 ms-3">
+
+          <!-- Modal -->
+<div class="modal fade" id="exampleModal-{{movie.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{movie.movie_name}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <video id="track-{{movie.id}}" width="100%" src="{{movie.movie_source.url}}" muted></video>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+                <img src="{{movie.movie_banner.url}}" class="card-img-top" alt="buz">
+                <div class="card-body">
+                    <div class="card-options">
+                        <i class="fa-solid fa-play"></i>
+                        <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <i onclick="handleModal('{{movie.id}}')" data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
+                    </div>
+
+                    <div class="card-genres">
+                    
+                        <ul>
+                            <li>Psikolojik</li>
+                            <li>Aksiyon</li>
+                        </ul>
+                    </div>
+
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+</div>
+
+        
+
+        </div>
+        {% endfor %}
+        {% endfor %}
+
+
+       
+        </div>
+   
+    <script>
+
+     const cardBody = document.querySelectorAll('.card-body')
+
+     document.querySelectorAll('.card').forEach(cardDiv => {
+
+
+        cardDiv.onmouseenter = function(e) {
+            console.log("chilD:", e.target.children[1])
+            const target = e.target.children[1]
+            target.style.opacity = 1
+            target.style.visibility = "visible"
+        }
+
+
+        cardDiv.onmouseleave = function(e) {
+
+            const target = e.target.children[1]
+            target.style.opacity = 0
+            target.style.visibility = "hidden"
+        }
+
+     })
+
+    </script>
+
+
+    <script>
+    
+      function handleModal(movieId) {
+
+        const movieSource = document.getElementById(`track-${movieId}`)
+        movieSource.muted = false
+        // sesia yarla
+        movieSource.volume = 0.5
+        movieSource.play()
+
+
+        // kapanma talimatını ver
+        const modal = document.getElementById(`exampleModal-${movieId}`)
+
+        modal.addEventListener('hidden.bs.modal', function() {
+            // videoyu durdur
+            movieSource.pause()
+        })
+   
+
+      }
+
+
+    </script>
+
+    <script>
+            const video = document.getElementById("netflix_video");
+            const playButton = document.getElementById('playButton');
+            const audioBtn = document.getElementById('audio')
+
+            function playVideo() {
+
+                video.play();
+
+            }
+
+            document.body.onload = playVideo
+
+            video.addEventListener('ended', function () {
+                // Video bittiğinde butonu gösteriyoruz
+                playButton.style.display = 'revert';
+            });
+            
+            audioBtn.addEventListener('click', function() {
+
+                video.muted = !video.muted;
+
+               
+                if (video.muted == false) {
+                    audioBtn.className = 'fa-solid fa-lg fa-volume-off'
+
+                } else {
+          
+                    audioBtn.className = "fa-solid fa-lg fa-volume-xmark"
+                }
+              
+                video.volume = 0.5
+      
+               
+            })
+
+            playButton.addEventListener('click', function () {
+            video.currentTime = 0;
+            video.play();
+            playButton.style.display = 'none'; // Butonu tekrar gizliyoruz
+
+            });
+
+        
+    </script>
+
+{% endblock site-icerik %}
+

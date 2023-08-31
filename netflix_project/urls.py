@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+# static & settingpy
+from django.conf import settings
+from django.conf.urls.static import static
+
 # viewleri çek
 from netflix_app.views import *
 from user_app.views import *
@@ -25,6 +29,12 @@ urlpatterns = [
     path("", index, name="home"),
 
     # userapp endpointleri
-    path("login", user_login, name="user_login")
+    path('browse', user_dashboard, name="dashboard"),
+    path("login", user_login, name="user_login"),
+    path("register", user_register, name="user_register"),
+    path("logout", user_logout, name="user_logout"),
+
+    path("select/profile", user_profile_select, name="user_profile_select"),
+    path("genres/<categoryId>", only_movies, name="only_movies"),
     # userapp endpointleri biter
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

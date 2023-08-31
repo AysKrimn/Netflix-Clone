@@ -1,0 +1,37 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="auth_nav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'dashboard' %}">
+
+        <img src="{% static 'img/netflix_logo.png' %}" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <ul class="d-flex list-a-link">
+        <a class="nav-link link-light" href="{% url 'only_movies' 1 %}">Filmler</a>
+        <a class="nav-link link-light" href="{% url 'only_movies' 2 %}">Diziler</a>
+        <a class="nav-link link-light" href="">Listem</a>
+      </ul>
+      
+      <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+           
+            <button style="background-color: inherit; border: 1px solid #2b2929;" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <img style="width: 75px; max-height: 50px; object-fit: contain; border-radius: 5px;" src="{{request.selectedProfile.avatar.url}}" alt="avatar">
+              <span style="margin-left: 8px;">{{request.selectedProfile.name}}</span>
+          
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="{% url 'user_profile_select' %}">Hesap Değiştir</a></li>
+              <li><a class="dropdown-item" href="#">Hesap Ayarları</a></li>
+              <li class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'user_logout' %}">Çıkış Yap</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

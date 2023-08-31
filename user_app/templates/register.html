@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block site-ekstra %}
+  
+<style>
+
+    .header {
+
+        height: auto !important;
+    }
+</style>
+
+{% endblock site-ekstra %}
+
+
+
+{% block header-content %}
+  
+<div class="container">
+    <div class="row header-row justify-content-center">
+        <div class="col-lg-6 text-white align-self-center">
+            <div class="login-container">
+              <h2>Kayıt Ol</h2>
+              <form action="{% url 'user_register' %}" method="post">
+              
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Kullanıcı Adı</label>
+                    <input name="user_username" type="text" class="form-control" placeholder="Kullanıcı Adı">
+                  </div>
+
+
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input name="user_email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-Posta veya telefon numarası">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input name="user_password" type="password" class="form-control" id="exampleInputPassword1">
+                  </div>
+                  <button type="submit" class="btn btn-danger w-100">Kayıt Ol</button>
+             
+                  <div class="form-footer text-center mt-3">
+                    <p class="text-secondary mb-3">Zaten hesabınız var mı? buradan <a href="{% url 'user_login' %}">giriş yap</a>.</p>
+                  </div>
+                  {% csrf_token %}
+              </form>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock header-content %}

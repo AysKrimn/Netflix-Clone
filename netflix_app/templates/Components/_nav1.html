@@ -24,6 +24,9 @@
                 <li class="nav-item">
                     <a class="nav-link link-light" href="./login.html">Login</a>   
                 </li> -->
+
+                {% if request.path == "/" %}
+                  
                 <li class="nav-item dropdown me-2">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -40,7 +43,9 @@
                     <a style="color: inherit; text-decoration: none;" href="{% url 'user_login' %}">Oturum Aç</a>
 
                 </button>
+            {% endif %}
             </ul>
+          
         </div>
     </div>
 </nav>

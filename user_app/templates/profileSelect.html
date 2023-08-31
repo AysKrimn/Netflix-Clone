@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block site-icerik %}
+
+
+    <!-- Modal -->
+  {% if request.user.profiles.count < 5 %}
+    
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <!-- create new profile -->
+            <!-- enctype: multipart/form-data  forumdan resimleri göndermemizi sağlar -->
+        <form action="{% url 'user_profile_select' %}" method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+
+                {{profileForm}}
+
+     
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+          <button type="submit" class="btn btn-primary">Oluştur</button>
+        </div>
+
+        </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+    <div class="kim-izliyor text-center">
+        <div class="row justify-content-center mt-5">
+            <h1 class="text-center text-white mb-5 mt-5">Kim izliyor?</h1>
+        
+            {% for profile in request.user.profiles.all %}
+
+            <div class="col-sm-2">
+                <a href="{% url 'dashboard' %}" onclick="handleProfileSelection(event, '{{profile.id}}')">
+                    <div class="card">
+                        <img src="{{profile.avatar.url}}" class="card-img-top" alt="...">
+                        <h5 class="card-text text-secondary text-center">{{profile.name}}</h5>
+                    </div>
+                </a>
+            </div>
+              
+            {% endfor %}
+            
+            <div class="col-sm-2">
+               
+                    <div class="card">
+                        <img 
+                        {% if request.user.profiles.count >= 2 %}
+                          title="Maximum 5 hesap açabilirsiniz"
+
+                        {% else %}
+                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        {% endif %}
+
+                         id="plus" src="https://fontawesomeicons.com/images/svg/add-circle.svg" class="card-img-top"
+                            alt="addBtn">
+
+                        <div class="card-body">
+                            <h5 class="card-text text-secondary text-center">Profil Ekle</h5>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-center my-5">
+            <div class="col-sm-2 mb-5 mt-5">
+                <button class="kimizliyor-btn text-secondary">Profil Yönetimi</button>
+            </div>
+        </div>
+    </div>
+
+  
+
+
+    <script>
+
+        function handleProfileSelection(event, profileId) {
+
+            event.preventDefault()
+            // "name=value;path=/"
+            document.cookie = `selected_profile=${profileId};path=/`
+            document.location = "/browse"
+
+        }
+    </script>
+
+{% endblock site-icerik %}

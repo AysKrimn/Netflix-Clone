@@ -87,7 +87,7 @@
 
             {% for profile in request.user.profile.all %}
             <div class="col-3 mt-5 mb-5">
-                <a href="{% url 'user-dashboard' profile.id %}" class="text-decoration-none text-secondary">
+                <a onclick="handleSelection(event, '{{profile.id}}')" href="{% url 'user-dashboard'%}" class="text-decoration-none text-secondary">
 
                   
                     <div class="card bg-transparent">
@@ -138,5 +138,19 @@
       })
      </script>
 
+
+
+     <script>
+      // cookie set
+      function handleSelection(event, profileId) {
+
+        event.preventDefault()
+
+        document.cookie = `selected_profile_id=${profileId}; path=/;`
+        // yönlendir
+        window.location = "/browse"
+      }
+
+     </script>
     </body>
 </html>

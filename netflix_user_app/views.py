@@ -93,8 +93,13 @@ def user_logout(request):
     
     if request.user.is_authenticated:
 
+        response = redirect('homepage')
+        # cookiyi sil
+        response.delete_cookie('selected_profile_id')
+        # request cookisini sil 
         logout(request)
-        return redirect('homepage')
+        # yönlendir
+        return response
      
     else:
         return redirect('user-login')
@@ -131,13 +136,23 @@ def user_profile_select(request):
 
 # dashboard
 @login_required(login_url="user-login")
-def user_dashboard(request, profileId):
-    context = {}
+def user_dashboard(request):
 
-    selectedProfile = NetflixProfile.objects.filter(id=profileId).first()
-    context['profile'] = selectedProfile
+    context = {}
+    # cookie var mı? 
+    profileId = request.COOKIES.get('selected_profile_id')
+    print("PROFİLE:", profileId)
+
+    # ençok like alan filmler (lookups kullan)
+    #  gte = greater than equal >= 
+    #  lte = less than equal <=
+    # gt = >
+    # ls = <
+    mostLiked = Movies.objects.filter(movie_likes__gte=10)
 
     movies = {}
+
+    movies["En Çok Beğenilenler"] = mostLiked
 
     types = MovieTypes.objects.all()
 
@@ -147,6 +162,9 @@ def user_dashboard(request, profileId):
         movies[tur] = movie
     else:
         context["ogeler"] = movies.items()
+
+    
+    print("movies objesi:", movies)
 
 
     # rastgele source
@@ -159,7 +177,8 @@ def user_dashboard(request, profileId):
 
 # kategoriye göre sırala
 # sadece filmler
-def only_film(request, categoryId):
+def only_film_or_shows(request, categoryId):
+    print("userlist request:", request.profile)
     context = {}
 
     # ilgili kategoriyi yakala
@@ -185,14 +204,111 @@ def only_film(request, categoryId):
 
 # user-list
 def userList(request, profileId):
+
     context = {}
 
-    selectedProfile = NetflixProfile.objects.filter(id = profileId).first()
+    context['movies'] = request.profile.list.all() 
 
-    if selectedProfile:
-
-        context['movies'] = selectedProfile.list.all() 
-        context['profile'] = selectedProfile
-
+    print("data:",request.profile.list.all())
 
     return render(request, 'user_list.html', context)
+
+# ayarlar
+def user_account(request, userId):
+    context = {}
+    
+    return render(request, "account.html", context)
+
+
+# sadece user_accounttan gelen post isteklerini al
+@login_required(login_url='user-login')
+def change_user_setting(request):
+
+    user = NetflixUser.objects.filter(id = request.user.id).first()
+
+    if request.method == 'POST':
+        
+        # nitelikleri al
+        email = request.POST.get('email')
+        tel = request.POST.get('telno')
+        oldPassword = request.POST.get('oldPassword')
+        newPassword = request.POST.get('new_password')
+        newPassword_2 = request.POST.get('new_password_again')
+
+        if email:
+            user.email = email
+
+        if tel:
+            user.tel = tel
+
+        if oldPassword and newPassword and newPassword_2:
+            # eski şifre şuanki şifre ile uyuşuyor mu?
+            match = user.check_password(oldPassword)
+            # eğer match true dönerse yeni şifreleri kontrol et
+            if match:
+                if newPassword == newPassword_2:
+                    # yeni şifreyi oluştur
+                    user.set_password(newPassword)
+                else:
+                    # yeni şifreler uyuşmuyor
+                    print("yeni şifreler uyuşmuyor")
+                    pass
+            else:
+                # eski şifre uyusmuyor
+                print("eski şifre uyuşmuyor")
+                pass
+        # değişikleri kaydet
+        user.save()
+        # yönlendir
+        return redirect('change-user-setting')
+
+    else:
+
+        previusLink = request.META.get("HTTP_REFERER")
+        print("linklerr:", previusLink)
+
+        if previusLink:
+            return redirect(previusLink)
+        else:
+            return redirect("user-account", request.user.id)
+        
+
+# kart bilgilerini al
+@login_required(login_url='user-login')
+def get_or_setCard(request):
+
+    user = NetflixUser.objects.filter(id = request.user.id).first()
+
+    if request.method == 'POST':
+        
+        name = request.POST.get('cardName')
+        adress = request.POST.get('cardAdress')
+        city = request.POST.get('cardCity')
+        zip = request.POST.get('cardZip')
+        cardNo = request.POST.get('cardNo')
+        cardMoth = request.POST.get('expmonth')
+        cardYear = request.POST.get('expyear')
+        cardCVV = request.POST.get('cardCVV')
+        format = "{ay}/{yıl}".format(ay = cardMoth, yıl = cardYear)
+        if name and adress and city and zip and cardNo and cardMoth and cardYear and cardCVV:
+
+            paymentCard = Card.objects.create(
+                name = name,
+                no = cardNo,
+                cvc = cardCVV,
+                adress = adress,
+                city = city,
+                zip = zip, 
+                valid = format
+            )
+
+            user.debitCard = paymentCard
+            user.isPremium = True
+            user.save()
+            # aynı sayfaya yönlendir
+            return redirect('change-user-setting')
+        else:
+            # bilgiler eksik
+            pass
+    else:
+        return redirect('change-user-setting')

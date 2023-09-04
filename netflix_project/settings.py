@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'netflix_user_app.middleware.selected_profile'
 ]
 
 ROOT_URLCONF = 'netflix_project.urls'

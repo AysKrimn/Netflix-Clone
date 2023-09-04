@@ -44,7 +44,7 @@
                   <!-- filmi aç -->
                   <i class="fa-solid fa-play"></i>
                   <!-- çıkar -->
-                  <i onclick="remove_movie('{{movie.id}}')" class="fa-solid fa-minus"></i>
+                  <i onclick="remove_movie(event, '{{movie.id}}')" class="fa-solid fa-minus"></i>
                   <i onclick="like_movie('{{movie.id}}')" class="fa-solid fa-thumbs-up"></i>
                   <i onclick="playShortVideo('{{movie.id}}')" data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
               </div>
@@ -67,6 +67,12 @@
   </div>
 
   </div>
+
+  {% empty %}
+
+  <h3 class="text-light text-center">Buralar boş, ilginizi çekecek içerikler için<a href="{% url 'user-dashboard' %}">tıklayın</a>
+
+  </h3>
   {% endfor %}
 
 </div>
@@ -78,9 +84,22 @@
 <script src="{% static 'scripts/playTrailer.js' %}"></script>
 
 <script>
-function remove_movie(movieId) {
+async function remove_movie(event, movieId) {
 
-    alert(movieId)
+  const request = await fetch(`http://127.0.0.1:8000/v1/api/movies/profiles/{{request.profile.id}}/item/${movieId}/remove`)
+  const response = await request.json()
+
+  if (response.message == "removed") {
+
+    // cardı kaldır
+    const main_div = event.target.parentElement.parentElement.parentElement;
+    console.log(main_div)
+    main_div.remove()
+
+    // bunun modalını kaldır
+    document.getElementById(`exampleModal-${movieId}`).remove()
+
+  }
 }
 </script>
 {% endblock site-icerik %}

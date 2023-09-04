@@ -49,8 +49,26 @@ class NetflixProfile(models.Model):
           return self.name
     
 
+class Card(models.Model):
+
+      name = models.CharField(("Kart üzerindeki ad ve soyad"), max_length=50)
+      no = models.CharField(("Kart Numarası"), max_length=15)
+      cvc = models.CharField(("Güvenlik Numarası"), max_length=3)
+      valid = models.CharField(("Son Kullanma"), max_length=4)
+      # ekler
+      adress = models.CharField(("Adres"), max_length=50, blank=True)
+      city = models.CharField(("Şehir"), max_length=20, blank=True)
+      zip = models.IntegerField(("Zip Kodu"), default=0)
+
+
+      def __str__(self) -> str:
+            return self.name
+
 # Create your models here.
 class NetflixUser(AbstractUser):
 
        profile = models.ManyToManyField(NetflixProfile, verbose_name=("Alt Hesap"))
-    
+       tel = models.CharField(("Telefon Numarası"), max_length=50, blank=True)
+       # içerikleri izleyebilmesi için:  
+       isPremium = models.BooleanField(("Üye mi"), default=False, help_text="İşaretliyse kullanıcı film/dizi izleyebilir")
+       debitCard = models.ForeignKey(Card, verbose_name=("Kart"), on_delete=models.CASCADE, blank=True, null=True)

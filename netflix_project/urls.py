@@ -40,14 +40,18 @@ urlpatterns = [
     path('logout', user_logout, name="user-logout"),
 
     path('register', user_register, name="user-register"),
-    path('browse/watch/<profileId>', user_dashboard, name="user-dashboard"),
+    path('browse', user_dashboard, name="user-dashboard"),
     path('profile/select', user_profile_select, name="user-profile-select"),
-    path('genres/<categoryId>', only_film, name="movie-category"),
+    path('genres/<categoryId>', only_film_or_shows, name="movie-category"),
     path('profile/<profileId>/my-list', userList, name="user-list"),
+    path('YourAccount/<userId>', user_account, name="user-account"),
+    path('YourAccount/change/settings', change_user_setting, name="change-user-setting"),
+    path('YourAccount/change/card-detail', get_or_setCard, name="get-or-setCard"),
     # netflix_user_app burada biter
 
     # netflix_api 
     path("v1/api/movies/<movieId>/like", likeMovie, name="like-movie"),
-    path("v1/api/movies/profiles/<profileId>/item/<movieId>/add", addList, name="add-list")
+    path("v1/api/movies/profiles/<profileId>/item/<movieId>/add", addList, name="add-list"),
+    path("v1/api/movies/profiles/<profileId>/item/<movieId>/remove", removeList, name="remove-list")
     # netflix_api endpointleri biter
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

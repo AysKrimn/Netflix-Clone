@@ -35,13 +35,23 @@
 
       
         {% for category, movies in ogeler %}
-        <h3 class="ms-3 text-light">{{category.type}}</h3>
+
+        {% if category.type %}
+        <h3 style="position: relative;" class="ms-3 text-light">{{category.type}}</h3>
+        {% else %}
+        <h3 style="position: relative;" class="ms-3 text-light">{{category}}</h3>
+        {% endif %}
+        
+        
  
       
         {% for movie in movies %}
         <div class="col-3 ms-3 mb-5">
     
         <!-- Modal -->
+        {% if request.user.isPremium %}
+        
+        
       <div class="modal fade" id="exampleModal-{{movie.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -61,7 +71,11 @@
         </div>
       </div>
       </div>
+      {% else %}
+          
+        {% include "./Components/Modals/warningModal.html" %}
 
+      {% endif %}
 
       <div class="card">
               <img src="{{movie.movie_image.url}}" class="card-img-top" alt="buz">
@@ -70,10 +84,22 @@
                       <!-- filmi aç -->
                       <i class="fa-solid fa-play"></i>
                       <!-- listeye ekle -->
-                      <i onclick="add_list('{{profile.id}}', '{{movie.id}}')" class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                
+
+                      {% if request.user.isPremium %}
+                      <!-- listeye ekle -->
+                      <i onclick="add_list('{{request.profile.id}}', '{{movie.id}}')" class="fa-solid fa-plus" style="color: #ffffff;"></i>
                       <!-- begen -->
                       <i onclick="like_movie('{{movie.id}}')" class="fa-solid fa-thumbs-up"></i>
+                      <!-- fragmanı oynat -->
                       <i onclick="playShortVideo('{{movie.id}}')" data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
+                      
+                      {% else %}
+                      <i data-bs-toggle="modal" data-bs-target="#warningModal" class="fa-solid fa-plus"></i>
+                      <i data-bs-toggle="modal" data-bs-target="#warningModal" class="fa-solid fa-thumbs-up"></i>
+                      <i data-bs-toggle="modal" data-bs-target="#warningModal" class="fa-solid fa-chevron-down"></i>
+                      {% endif %}
+                     
                   </div>
 
                   <div class="card-genres">

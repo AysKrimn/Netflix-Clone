@@ -1,0 +1,272 @@
+body {
+    background-color: black;
+    overflow-x: hidden;
+}
+
+ul {
+
+    margin: 0;
+    padding: 0;
+}
+
+.list-a-link a {
+
+    margin: 8px;
+}
+
+#auth_nav {
+
+    background-color: inherit !important;
+}
+
+.dropdown-menu[data-bs-popper] {
+
+    left: -94px;
+}
+.header {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.5)), url('../img/arkaplan.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.header-row {
+    width: 100%;
+    height: 80vh;
+}
+
+.mail-container{
+    background: linear-gradient(0deg, rgba(0, 8, 29, 1), rgba(0, 8, 29, 1)) padding-box,linear-gradient(271.65deg, #233371 5.26%, #00197a 50.02%,#e50914 97.68%) border-box;
+    border: 4px solid transparent;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.accordion-item{
+    background-color: rgba(19, 33, 68, 1);
+    color: white;
+    margin-bottom: 10px;
+    border: none;
+}
+
+.accordion-button {
+    background-color: rgba(19, 33, 68, 1);
+    color: white;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(34, 51, 98, 1);
+    color: white;
+    border: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-button.collapsed::after {
+    background: url("../svg/plus-lg.svg");
+    background-position: center;
+    background-size: 30px;
+}
+
+
+.accordion-button:not(.collapsed)::after {
+    background: url("../svg/dash-lg.svg");
+    background-position: center;
+    background-size: 30px;
+}
+
+hr {
+    background-color: gray;
+    border: 4px solid gray;
+}
+
+
+
+.dropdown {
+    list-style: none;
+}
+
+
+.header-row h1 {
+    font-size: 60px;
+}
+
+.ilkp {
+    font-size: 30px;
+}
+
+.kim-izliyor {
+    width: 100%;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(36,36,36,1) 20%);
+}
+
+.kim-izliyor img{
+    border-radius: 15px;
+}
+
+.kim-izliyor a{
+    text-decoration: none;
+}
+
+
+
+.kimizliyor-btn{
+    padding: 0 20px;
+    font-size: 20px;
+    background: none;
+    border: 2px solid;
+}
+
+.hesap-header {
+    width: 100%;
+    background-color: lightgoldenrodyellow;
+}
+
+.dropdown-toggle {
+    text-decoration: none;
+}
+
+.hesap-header-head {
+    padding: 30px;
+}
+
+.login-container {
+    padding: 30px;
+    background: rgba(0,0,0,0.7);
+}
+
+
+
+
+img {
+    max-width: 100%;
+}
+
+#footer {
+
+    margin-top: 2rem;
+}
+
+
+/* card */
+.card {
+
+    transition: 0.5s;
+    color: white;
+    position: relative;
+    z-index: 0;
+}
+
+.card:hover {
+
+    transform: scale(1.3);
+    z-index: 1;
+}
+
+.card img {
+    max-height: 200px;
+    object-fit: fill;
+    aspect-ratio: 1/1;
+}
+
+.card-body {
+    transition: 0.5s;
+    position: absolute;
+    z-index: -1;
+    background: #0a0a0a;
+    top: 100%;
+    opacity: 0;
+    color: white !important;
+}
+
+
+.card-options i {
+
+    padding: 5px;
+    margin-left: 5px;
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+.card-options i:hover {
+
+    background-color: rgb(87, 80, 80);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.card-options i[class="fa-solid fa-play"] {
+
+    background-color: white;
+    color: black;
+}
+.card-options i[class="fa-solid fa-chevron-down"] {
+
+    float: right;
+    margin-right: 8px;
+}
+
+
+.card-genres ul {
+
+    display: flex;
+    padding: 0;
+}
+
+.card-genres ul li {
+
+    margin: 13px;
+}
+
+
+.video-option {
+
+    text-align: end;
+    margin-right: 3rem;
+}
+
+
+.video-option i {
+
+    cursor: pointer;
+    margin: 5px;
+}
+
+.video-option #playButton {
+
+    display: none;
+}
+
+
+.card {
+    border: none;
+}
+
+.card:hover {
+
+    border: none;
+}
+
+.card img {
+    border-radius: 0;
+}
+#plus {
+
+    background-color: #242424;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 375px) {
+    .header {
+        height: 130vh;
+    }
+    .header-row h1 {
+        font-size: 35px;
+    }
+}
+
+

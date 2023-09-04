@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block ekler %}
+<link rel="stylesheet" href="{% static 'style/account.css' %}">
+
+<style>
+.form-row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.form-container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .form-row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+{% endblock ekler %}
+
+
+{% block site-icerik %}
+  
+<!-- modalları dahil et -->
+{% include "./Components/Modals/emailModal.html" %}
+{% include "./Components/Modals/passwordModal.html" %}
+{% include "./Components/Modals/phoneModal.html" %}
+
+<div class="container">
+    <div class="hesap-header">
+   
+        <div class="hesap-header-head">
+            <div class="container">
+                <h1>Hesap</h1>
+                <hr>
+                <div class="row justify-content-between">
+
+                    {% if request.user.isPremium %}
+                    <div class="col-sm-3">
+                        <h3>Üyelik Ödemeler</h3>
+                        <button>Üyeliği İptal Et</button>
+                    </div>
+                    {% else %}
+                      
+                    {% include "./Components/checkoutform.html" %}
+                    
+                    {% endif %}
+                    
+              
+                    <div class="col-sm-3">
+                        <p><b>{{request.user.email}}</b></p>
+                        <p>Tel: {{request.user.tel}}</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <a type="button" href="" data-bs-toggle="modal" data-bs-target="#emailModal">
+                            <p>E-Postayı Değiştir</p>
+                        </a>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                            <p>Parolayı Değiştir</p>
+                        </a>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#phoneModal">
+                            <p>Telefon Numarasını Değiştir</p>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row justify-content-between">
+                    <div class="col-sm-4">
+                        <h3>Ayarlar</h3>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><a href="">+18 İçerik</a></p>
+                        <p><a href="">Teste Katılın</a></p>
+                        <p><a href="">İçerik indirilen cihazları yönet</a></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row justify-content-between">
+                    <div class="col-sm-3">
+                        <h3>Profil ve ebeveyn Kontrolleri</h3>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="./img/smile-profil.png" alt="Resim bulunamadı">Mervan</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Hasan</a></li>
+                                <li><a class="dropdown-item" href="#">Hüseyin</a></li>
+                                <li><a class="dropdown-item" href="#">Gülsüm</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="icon-right d-flex justify-content-end">
+                            <i class="bi bi-plus fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock site-icerik %}

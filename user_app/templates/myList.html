@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block site-icerik %}
+  
+        <div class="row">
+
+
+            {% for category, movies in dynamic %}
+
+        
+            
+            <h3 class="text-light ms-3">{{category}}</h3>
+
+            
+        
+        <!-- filmleri döngüye sok -->
+        {% for movie in movies %}
+        <div class="col-3 ms-3">
+
+                <!-- Modal -->
+        <div class="modal fade" id="exampleModal-{{movie.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{movie.movie_name}}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            
+            <video id="track-{{movie.id}}" width="100%" src="{{movie.movie_source.url}}" muted></video>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+        </div>
+
+
+        <div class="card">
+                    <img src="{{movie.movie_banner.url}}" class="card-img-top" alt="buz">
+                    <div class="card-body">
+                        <div class="card-options">
+                            <i class="fa-solid fa-play"></i>
+                            <i onclick="removeMyList(event,'{{movie.id}}')" class="fa-solid fa-minus" style="color: #ffffff;"></i>
+                            <i onclick="handleLike('{{movie.id}}')" class="fa-solid fa-thumbs-up"></i>
+                            <i onclick="handleModal('{{movie.id}}')" data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
+                        </div>
+
+                        <div class="card-genres">
+                        
+                            <ul>
+                                <li>Psikolojik</li>
+                                <li>Aksiyon</li>
+                            </ul>
+                        </div>
+
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+        </div>
+
+            
+
+            </div>
+            {% endfor %}
+            {% endfor %}
+
+
+            
+            </div>
+
+
+            
+            
+<script src="{% static 'scripts/cardHover.js' %}"></script>
+<script src="{% static 'scripts/handleModal.js' %}"></script>
+<script src="{% static 'scripts/removeMyList.js' %}"></script>
+{% endblock site-icerik %}

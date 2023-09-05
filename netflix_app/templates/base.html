@@ -14,6 +14,10 @@
     <title>{% block site-baslik %}{% endblock site-baslik %}</title>
 
     {% block site-ekstra %}{% endblock site-ekstra %}
+
+    <script>
+      const base_api_url = `http://127.0.0.1:8000/api/v1`
+    </script>
 </head>
 
 <body>
@@ -63,13 +67,10 @@
     {% endif %}
 
 
-
+<main class="site-main-container">
 {% block site-icerik %}
-
-
-
 {% endblock site-icerik %}
-
+</main>
 
 <!-- profil seçme kısmındaysa footeri gösterme -->
 {% if not request.path == '/select/profile' %}

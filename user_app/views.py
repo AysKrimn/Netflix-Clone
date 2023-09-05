@@ -32,8 +32,12 @@ def user_logout(request):
 
     if request.user.is_authenticated:
         logout(request)
+
+    response = redirect('home')
+    # cookie çıkartır
+    response.delete_cookie("selected_profile")
         
-    return redirect('home')
+    return response
     
 
 # hesap oluşturma
@@ -78,13 +82,29 @@ def user_dashboard(request):
     
     movies = {}
 
+    allMovies = Movies.objects.all()
+    # 10 veya üstü alan film / dizi trende girsin
+    # lookup metodu kullan
+    # lte = <= 
+    # gte = >=
+    # gt = >
+    # lt = <
+    # icontains = field içinde arama yapar
+    # searchResults = allMovies.filter(movie_name__icontains="Q")
+    # movies["Arama Sonuçları"] = searchResults
+
+    trends = allMovies.filter(movie_likes__gte=10)
+
+    if trends.count():
+        movies["En Çok Beğenilenler"] = trends
+
     # tüm türleri çek
     categories = MovieType.objects.all()
     # tüm kategorileri döngüye sok
     for category in categories:
         # category = film, dizi, çizgi-dizi
 
-        movie = Movies.objects.filter(movie_type__type = category.type)
+        movie = allMovies.filter(movie_type__type = category.type)
 
         # key/ value şeklinde gönder
         if movie.count():
@@ -101,7 +121,7 @@ def user_dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
-# sadece filmler
+# sadece filmler/diziler
 def only_movies(request, categoryId):
 
     context = {}
@@ -110,10 +130,23 @@ def only_movies(request, categoryId):
     categories = MovieType.objects.filter(id = categoryId).first()
     movies = Movies.objects.filter(movie_type = categories.id)
 
+    # trend
+    trends = movies.filter(movie_likes__gte=10)
+    if trends.count():
+        outputMsg = ""
+
+        if categories.type == "Film":
+            outputMsg = "En Çok Beğenilen Filmler"
+        elif categories.type == "Dizi":
+            outputMsg = "En Çok Beğenilen Diziler"
+
+        series[outputMsg] = trends
+
+
     series[categories.type] = movies
     context["dynamic"] = series.items()
 
-    print(context["dynamic"])
+    print("veriler:", context["dynamic"])
     context['randomBanner'] = movies.order_by('?').first()
     # tüm kategorileri döngüye sok
     return render(request, "dashboard.html", context)
@@ -154,3 +187,12 @@ def user_profile_select(request):
         return render(request, 'profileSelect.html', context)
     
 
+# listem
+def loadMyList(request):
+    context = {}
+    myList = {}
+
+    myList['Listem'] = request.selectedProfile.list.all()
+    context['dynamic'] = myList.items()
+
+    return render(request, 'myList.html', context)

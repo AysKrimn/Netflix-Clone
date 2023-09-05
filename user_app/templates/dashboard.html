@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 {% block header-content %}
   
@@ -37,13 +37,13 @@
 
      
         
-      <h3 class="text-light ms-3">{{category}}</h3>
+      <h3 class="text-light ms-5">{{category}}</h3>
 
         
     
 <!-- filmleri döngüye sok -->
 {% for movie in movies %}
-<div class="col-3 ms-3">
+<div class="col-3 ms-5 mb-5">
 
           <!-- Modal -->
 <div class="modal fade" id="exampleModal-{{movie.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -71,20 +71,24 @@
                 <div class="card-body">
                     <div class="card-options">
                         <i class="fa-solid fa-play"></i>
-                        <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
-                        <i class="fa-solid fa-thumbs-up"></i>
+                        <i onclick="handleAddList('{{movie.id}}')" class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                        <i onclick="handleLike('{{movie.id}}')" class="fa-solid fa-thumbs-up"></i>
                         <i onclick="handleModal('{{movie.id}}')" data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
                     </div>
 
                     <div class="card-genres">
                     
                         <ul>
-                            <li>Psikolojik</li>
-                            <li>Aksiyon</li>
+
+                            {% for category in movie.movie_category.all %}
+                            <li>{{category}}</li>
+                            {% endfor %}
+                        
+                  
                         </ul>
                     </div>
 
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <p class="card-text">{{movie.movie_description}}</p>
                 </div>
 </div>
 
@@ -97,58 +101,10 @@
 
        
         </div>
-   
-    <script>
-
-     const cardBody = document.querySelectorAll('.card-body')
-
-     document.querySelectorAll('.card').forEach(cardDiv => {
 
 
-        cardDiv.onmouseenter = function(e) {
-            console.log("chilD:", e.target.children[1])
-            const target = e.target.children[1]
-            target.style.opacity = 1
-            target.style.visibility = "visible"
-        }
-
-
-        cardDiv.onmouseleave = function(e) {
-
-            const target = e.target.children[1]
-            target.style.opacity = 0
-            target.style.visibility = "hidden"
-        }
-
-     })
-
-    </script>
-
-
-    <script>
-    
-      function handleModal(movieId) {
-
-        const movieSource = document.getElementById(`track-${movieId}`)
-        movieSource.muted = false
-        // sesia yarla
-        movieSource.volume = 0.5
-        movieSource.play()
-
-
-        // kapanma talimatını ver
-        const modal = document.getElementById(`exampleModal-${movieId}`)
-
-        modal.addEventListener('hidden.bs.modal', function() {
-            // videoyu durdur
-            movieSource.pause()
-        })
-   
-
-      }
-
-
-    </script>
+    <script src="{% static 'scripts/cardHover.js' %}"></script>
+    <script src="{% static 'scripts/handleModal.js' %}"></script>
 
     <script>
             const video = document.getElementById("netflix_video");
@@ -195,6 +151,10 @@
 
         
     </script>
+
+
+    <script src="{% static 'scripts/likeMovie.js' %}"></script>
+    <script src="{% static 'scripts/addMyList.js' %}"></script>
 
 {% endblock site-icerik %}
 

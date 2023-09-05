@@ -9,6 +9,10 @@ ul {
     padding: 0;
 }
 
+div[class='row'] {
+    margin-bottom: 11rem;
+}
+
 .list-a-link a {
 
     margin: 8px;
@@ -210,6 +214,10 @@ img {
     margin-right: 8px;
 }
 
+.card-body {
+
+    width: 100%;
+}
 
 .card-genres ul {
 

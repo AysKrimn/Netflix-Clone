@@ -46,7 +46,7 @@
             <div class="col-sm-2">
                 <a href="{% url 'dashboard' %}" onclick="handleProfileSelection(event, '{{profile.id}}')">
                     <div class="card">
-                        <img src="{{profile.avatar.url}}" class="card-img-top" alt="...">
+                        <img src="{{profile.avatar.url}}" class="card-img-top" alt="{{profile.name}}">
                         <h5 class="card-text text-secondary text-center">{{profile.name}}</h5>
                     </div>
                 </a>

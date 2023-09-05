@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 # viewleri çek
 from netflix_app.views import *
 from user_app.views import *
+from netflix_api.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", index, name="home"),
@@ -34,7 +35,15 @@ urlpatterns = [
     path("register", user_register, name="user_register"),
     path("logout", user_logout, name="user_logout"),
 
+    path("myList", loadMyList, name="my_list"),
     path("select/profile", user_profile_select, name="user_profile_select"),
     path("genres/<categoryId>", only_movies, name="only_movies"),
+    
     # userapp endpointleri biter
+
+    # api endpoints
+    path("api/v1/movies/<movieId>/like", like_movie, name="like_movie"),
+    path("api/v1/myList/<movieId>/add", addMyList, name="addMyList"),
+    path("api/v1/myList/<movieId>/remove", removeMyList, name="removeMyList")
+    # api endpoints biter
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

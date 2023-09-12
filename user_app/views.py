@@ -5,7 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .models import * 
 
 # profil oluşturma formu
-from .form import CreateProfile
+from .form import CreateProfile, CreateDebitCard
+
+# api istekleri yapamk için
+import requests
 
 # Create your views here.
 def user_login(request):
@@ -73,6 +76,111 @@ def user_register(request):
         return render(request, 'register.html')
     
 
+# hesap ayarlari
+@login_required(login_url='user_login')
+def user_account_setting(request):
+    context = {}
+
+    if request.method == 'POST':
+        
+        form = CreateDebitCard(request.POST)
+
+        data = {
+            "cardNo": request.POST.get('debitNo'),
+            "price": 30
+        }
+
+        print("form:", data)
+        # api servisine istek at
+        response = requests.post("http://localhost:8080/api/cards", json=data)
+
+
+
+        if response.status_code == 200:
+            server_message = response.json()
+            print("svden gelen yanşt:", server_message)
+
+            if server_message.get('error'):
+                # hata mesajı
+                return redirect('user-account')
+
+            # user bulunmuşsa:
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.account = request.user
+                # premimumu aktif hale getir
+                request.user.is_premiumUser = True
+                request.user.save()
+                # formu kaydet
+                instance.save()
+                # başarılı mesajı vs
+                return redirect('user-account')
+            else:
+                print("form errors:", form.errors)
+                return redirect('user-account')
+        else:
+            # sunucu hatalarını ayıkla
+            pass
+
+    else:
+
+        if not request.user.is_premiumUser:
+
+            isRegisteredBefore = DebitCard.objects.filter(account__id = request.user.id).first()
+            if isRegisteredBefore:
+                  context['registeredBefore'] = True
+                  context['form'] = CreateDebitCard(instance=isRegisteredBefore)
+            else:
+                  context['form'] = CreateDebitCard()
+          
+
+        return render(request, "account.html", context)
+
+# hesap ayarlari değişitmre (modallardan gelen verielr buradan işlenir)
+def change_user_setting(request):
+    yonlendir = redirect('user-account')
+    error = False
+    user = NetflixUser.objects.filter(id = request.user.id).first()
+
+    if user is None:
+        # hata mesaji vs gönder
+        return yonlendir
+    
+
+    if request.method == 'POST':
+        # gelen verileri kontrol et
+        email = request.POST.get('email')
+        tel = request.POST.get('tel')
+        oldPassword = request.POST.get('oldPassword')
+
+        if email:
+            user.email = email
+        elif tel: 
+            user.tel = tel
+        elif oldPassword:
+             
+             newPassword = request.POST.get('newPassword')
+             newPasswordConfirm = request.POST.get('newPasswordConfirm')
+             
+             if newPassword and newPasswordConfirm and newPassword == newPasswordConfirm:
+                 user.set_password(newPassword)
+             else:
+                 error = True
+        else:
+            # istenmeyen boş veri
+            error = True
+
+
+        if error:
+            return yonlendir
+        
+        user.save()
+        # aynı svye gönder
+        return yonlendir
+
+    else:
+        return yonlendir
+
 
 # filmlerin izlendigi yer
 # bu endpointi koru
@@ -83,6 +191,10 @@ def user_dashboard(request):
     movies = {}
 
     allMovies = Movies.objects.all()
+    
+    for movie in allMovies:
+
+        movie.similar_movies
     # 10 veya üstü alan film / dizi trende girsin
     # lookup metodu kullan
     # lte = <= 
@@ -94,6 +206,9 @@ def user_dashboard(request):
     # movies["Arama Sonuçları"] = searchResults
 
     trends = allMovies.filter(movie_likes__gte=10)
+    if request.user.kidProtect:
+
+        trends = trends.filter(movie_recommended_age__lte=17)
 
     if trends.count():
         movies["En Çok Beğenilenler"] = trends
@@ -105,6 +220,10 @@ def user_dashboard(request):
         # category = film, dizi, çizgi-dizi
 
         movie = allMovies.filter(movie_type__type = category.type)
+
+        # requestteki elemanın kid protecti aktifse
+        if request.user.kidProtect:
+            movie = movie.filter(movie_recommended_age__lte=17)
 
         # key/ value şeklinde gönder
         if movie.count():

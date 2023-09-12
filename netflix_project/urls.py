@@ -34,7 +34,8 @@ urlpatterns = [
     path("login", user_login, name="user_login"),
     path("register", user_register, name="user_register"),
     path("logout", user_logout, name="user_logout"),
-
+    path('YourAccount', user_account_setting, name="user-account"),
+    path('change/user/account/details', change_user_setting, name="change-user-setting"),
     path("myList", loadMyList, name="my_list"),
     path("select/profile", user_profile_select, name="user_profile_select"),
     path("genres/<categoryId>", only_movies, name="only_movies"),
@@ -44,6 +45,8 @@ urlpatterns = [
     # api endpoints
     path("api/v1/movies/<movieId>/like", like_movie, name="like_movie"),
     path("api/v1/myList/<movieId>/add", addMyList, name="addMyList"),
-    path("api/v1/myList/<movieId>/remove", removeMyList, name="removeMyList")
+    path("api/v1/myList/<movieId>/remove", removeMyList, name="removeMyList"),
+    path("api/v1/activate/kid/protection", kidProtect, name="kidProtect"),
+    path("api/v1/user/subscription", canceloractiveSub, name="sub")
     # api endpoints biter
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

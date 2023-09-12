@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+
+{% block site-icerik %}
+
+<!-- modaller -->
+{% include "./Components/Modals/passwordModal.html" %}
+{% include "./Components/Modals/emailModal.html" %}
+{% include "./Components/Modals/phoneModal.html" %}
+
+<div class="container">
+    <div class="hesap-header">
+    
+        <div class="hesap-header-head">
+            <div class="container">
+                <h1>Hesap</h1>
+                <hr>
+                <div class="row justify-content-between">
+
+                    
+                    {% if request.user.is_premiumUser %}
+
+                    <div class="col-sm-3">
+                        <h3>Üyelik Ödemeler</h3>
+                        <button onclick="make_api_request()" class="btn btn-danger">Üyeliği İptal Et</button>
+                    </div>
+                    {% else %}
+
+                    <div class="col-12">
+                        {% include "./Components/DebitForm/card.html" %}
+                    </div>
+                  
+                    {% endif %}
+                  
+
+
+                    <div class="col-sm-3">
+                        <p><b>{{request.user.email}}</b></p>
+                        <p>Tel: {{request.user.tel}}</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="#">
+                            <p data-bs-toggle="modal" data-bs-target="#emailModal">E-Postayı Değiştir</p>
+                        </a>
+                        <a href="#">
+                            <p data-bs-toggle="modal"  data-bs-target="#passwordModal">Parolayı Değiştir</p>
+                        </a>
+                        <a href="#">
+                            <p data-bs-toggle="modal"  data-bs-target="#telModal">Telefon Numarasını Değiştir</p>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row justify-content-between">
+                    <div class="col-sm-4">
+                        <h3>Ayarlar</h3>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><a onclick="handleKidProtection(event)" href="#">
+                        
+                            {% if request.user.kidProtect %}
+                            Ebeveyn Korumasını Kaldır
+                            {% else %}
+                            Ebeveyn Koruması
+                            {% endif %}
+                            
+                        
+                        </a></p>
+                        <p><a href="">Teste Katılın</a></p>
+                        <p><a href="">İçerik indirilen cihazları yönet</a></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row justify-content-between">
+                    <div class="col-sm-3">
+                        <h3>Profil ve ebeveyn Kontrolleri</h3>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="./img/smile-profil.png" alt="Resim bulunamadı">Mervan</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Hasan</a></li>
+                                <li><a class="dropdown-item" href="#">Hüseyin</a></li>
+                                <li><a class="dropdown-item" href="#">Gülsüm</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="icon-right d-flex justify-content-end">
+                            <i class="bi bi-plus fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+async function handleKidProtection(event) {
+
+    event.preventDefault()
+
+    const request = await fetch(`${base_api_url}/activate/kid/protection`)
+    const response = await request.json()
+
+    console.log("veri:", response)
+
+
+    if (response.data.status === "active") {
+
+        event.target.innerText = "Ebeveyn Korumasını Kaldır"
+    } else {
+
+
+        event.target.innerText = "Ebeveyn Koruması"
+
+    }
+
+        
+    alert(response.data.message)
+    
+}
+
+</script>
+
+
+
+<script>
+
+    async function make_api_request() {
+        const onayla = window.confirm("Üyeliğinizi iptal etmek istediğinize emin misiniz?")
+
+        if (onayla) {
+
+            const request = await fetch(`${base_api_url}/user/subscription`)
+            const response = await request.json()
+
+            // reload at
+            window.location.reload()
+        }
+
+    }
+
+
+</script>
+
+{% endblock site-icerik %}
+
+
+

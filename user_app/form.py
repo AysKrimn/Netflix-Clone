@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import NetflixProfile
+from .models import NetflixProfile, DebitCard
 
 class CreateProfile(forms.ModelForm):
 
@@ -16,3 +16,10 @@ class CreateProfile(forms.ModelForm):
             field.widget.attrs.update({'class': 'form-control'})
             
 
+
+class CreateDebitCard(forms.ModelForm):
+    
+    class Meta:
+        model = DebitCard
+        fields = "__all__"
+        exclude = ["account"]

@@ -18,6 +18,9 @@ class NetflixProfile(models.Model):
 class NetflixUser(AbstractUser):
     # userin yan hesapları
     profiles = models.ManyToManyField(NetflixProfile, verbose_name=("Yan Hesaplar"))
+    tel = models.CharField(("Telefon Numarası"), max_length=50, blank=True)
+    is_premiumUser = models.BooleanField(("Abone mi"), default=False)
+    kidProtect = models.BooleanField(("Ebeveyn Koruması"), default=False)
 
     def __str__(self) -> str:
         return self.username
@@ -48,6 +51,49 @@ class Movies(models.Model):
     movie_likes = models.PositiveIntegerField(("Beğeni Sayısı"), default=0)
     movie_source = models.FileField(("Source"), upload_to="Movies", max_length=100)
     movie_createdAt = models.DateTimeField(auto_now=True)
+    movie_recommended_age = models.PositiveIntegerField(("Yaş Aralığı"), default=15)
 
     def __str__(self):
         return self.movie_name
+
+
+    def similar_movies(self):
+        data = {}
+        # ilgili filmin kategorilerini çek ve querysete kendisini dahil etme
+        movies = Movies.objects.filter(movie_category__in = self.movie_category.all()).exclude(id = self.id)
+        
+        # movies filter oldugu icin bir array geliyor verilerin hepsine tek tek ulas
+        for movie in movies:
+            # eğer items içinde movienin idsi yoksa bunu kayit ettir (aynı verilerin tekrar tekrar gelmemesi icin)
+            if not movie.id in data:
+                data[movie.id] = movie
+                
+        return data.items()
+    
+    def handleCategories(self):
+        data = []
+        categories = self.movie_category.all()
+        
+        for category in categories:
+            data.append(category.name)
+
+        return ", ".join(data)
+    
+
+from django.core.validators import MinLengthValidator, MinValueValidator
+
+class DebitCard(models.Model):
+    
+    account = models.ForeignKey(NetflixUser, verbose_name=("Kayıtlı"), on_delete=models.CASCADE)
+    name = models.CharField(("İsim Soyisim"), max_length=50)
+    cardName = models.CharField(("Karttaki Ad/Soyad"), max_length=50)
+    email = models.CharField(("E-mail"), max_length=50)
+    adress = models.TextField(("Adres"))
+    zip = models.PositiveIntegerField(("Zip Kod"))
+    debitNo = models.PositiveIntegerField(("Kredi Kart Numarısı"))
+    expiredMonth = models.PositiveIntegerField(("Ay"), validators=[MinValueValidator(2)])
+    expiredYear = models.PositiveIntegerField(("Yıl"))
+    cvv = models.PositiveIntegerField(("Güvenlik kod"))
+
+    def __str__(self) -> str:
+        return self.account.username

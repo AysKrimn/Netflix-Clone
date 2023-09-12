@@ -7,6 +7,10 @@
 
 
 {% block site-icerik %}
+
+    {% if not request.user.is_premiumUser %}
+        {% include "./Components/Modals/subscriptionRequired.html" %}
+    {% endif %}
     <!-- hero wallpaper -->
     <div class="hero-image">
 
@@ -46,6 +50,7 @@
 <div class="col-3 ms-5 mb-5">
 
           <!-- Modal -->
+{% if request.user.is_premiumUser %}
 <div class="modal fade" id="exampleModal-{{movie.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -57,23 +62,73 @@
         
         <video id="track-{{movie.id}}" width="100%" src="{{movie.movie_source.url}}" muted></video>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+
+      <div class="row mt-5 similar-movies-container">
+
+
+        {% if movie.similar_movies|length %}
+        <h3 class="mb-3">Benzer Türler</h3>
+        {% endif %}
+    
+
+        {% for key, smilar in movie.similar_movies %}
+        
+   
+  
+       
+
+        <div class="col-md-4 mb-3">
+
+          <div class="banner">
+
+            <img src="{{smilar.movie_banner.url}}" alt="{{smilar.movie_name}}" class="responsive-banner">
+          </div>
+
+          <div class="card-options">
+
+            <div class="d-flex mt-3 justify-content-end">
+              <i onclick="handleAddList('{{smilar.id}}')" class="fa-solid fa-plus" style="color: #ffffff;"></i>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+
+      </div>
+
+      <div class="modal-footer d-block">
+      
+        <h3>{{movie.movie_name}} Hakkında</h3>
+        <p><b>Açıklama:</b> {{movie.movie_description}}</p>
+        <p><b>Kategoriler:</b> {{movie.handleCategories}} </p>
       </div>
     </div>
   </div>
 </div>
-
+{% endif %}
 
 <div class="card">
                 <img src="{{movie.movie_banner.url}}" class="card-img-top" alt="buz">
                 <div class="card-body">
                     <div class="card-options">
+
+                        {% if request.user.is_premiumUser %}
                         <i class="fa-solid fa-play"></i>
                         <i onclick="handleAddList('{{movie.id}}')" class="fa-solid fa-plus" style="color: #ffffff;"></i>
                         <i onclick="handleLike('{{movie.id}}')" class="fa-solid fa-thumbs-up"></i>
                         <i onclick="handleModal('{{movie.id}}')" data-bs-toggle="modal" data-bs-target="#exampleModal-{{movie.id}}" class="fa-solid fa-chevron-down"></i>
+                        
+                        {% else %}
+                        
+                        <i class="fa-solid fa-play" data-bs-toggle="modal" data-bs-target="#subModal"></i>
+                        <i class="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#subModal" style="color: #ffffff;"></i>
+                        <i class="fa-solid fa-thumbs-up" data-bs-toggle="modal" data-bs-target="#subModal"></i>
+                        <i data-bs-toggle="modal" data-bs-target="#subModal" class="fa-solid fa-chevron-down"></i>
+                        
+                        
+                        {% endif %}
+                        
+         
                     </div>
 
                     <div class="card-genres">

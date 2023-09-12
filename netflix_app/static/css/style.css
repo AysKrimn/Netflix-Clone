@@ -268,6 +268,27 @@ img {
     cursor: pointer;
 }
 
+.similar-movies-container {
+
+    padding: 1rem;
+}
+
+.modal-content {
+
+    background-color: #080606;
+}
+
+.modal-content * {
+
+    color: white !important;
+}
+.responsive-banner {
+
+    aspect-ratio: 1/1;
+    width: 100%;
+    object-fit: fill;
+}
+
 @media screen and (max-width: 375px) {
     .header {
         height: 130vh;

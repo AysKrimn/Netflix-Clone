@@ -29,6 +29,10 @@ def user_login(request):
         # diğer tüm potensiyel hatalar içni:
         return redirect('user_login')
     else:
+
+        if request.user.is_authenticated:
+            return redirect('dashboard')
+        
         return render(request, 'login.html')
 
 def user_logout(request):
@@ -63,10 +67,17 @@ def user_register(request):
 
 
             user = NetflixUser.objects.create(username = user_name, email = user_email)
+            # set_password ile veritabanına şifreyi hashlenmiş bir şekilde gönder
             user.set_password(user_password)
             user.save()
 
-            # set_password ile veritabanına şifreyi hashlenmiş bir şekilde gönder
+            # mail at
+            user.email_user(
+             subject = "Netflix'e hoşgeldiniz",
+             message = f"{user.username} hesabınız başarılı bir şekilde oluşturuldu. Bizi tercih ettiğiniz için teşekkür ederiz. Hemen profil oluşturarak izlemenin keyfini çıkarın. http://127.0.0.1:8000/select/profile"
+                            
+            )
+  
 
 
             # mesaj gönderilebilir
@@ -75,6 +86,51 @@ def user_register(request):
     else:
         return render(request, 'register.html')
     
+# şifre değişitme
+def user_reset_password(request):
+
+    if request.method == 'POST':
+        
+        email = request.POST.get('user_email')
+
+        if email:
+            # bu emaile sahip user var mi?
+            user = NetflixUser.objects.filter(email = email).first()
+
+            if user is None:
+                # bu emaile sahip user yok
+                return redirect('user_reset')
+            
+            else:
+                # ticket oluştur
+                ticket = ResetPassword.objects.create(user = user)
+                user.email_user(
+                    subject="Şifre Sıfırlama",
+                    message="Merhaba {} parolanızı buradan sıfırlayabilirsiniz: http://127.0.0.1:8000/reset?id={}".format(user.username, ticket.tickedId)
+                )
+
+                # mesajlar gönderilebilir
+                return redirect('user_reset')
+ 
+    else:
+        # paramda id var mı?
+        ticketId = request.GET.get('id')
+
+        if ticketId:
+            validTicketId = ResetPassword.objects.filter(tickedId = ticketId).first()
+
+            if validTicketId:
+                # useri login et
+                login(request, validTicketId.user)
+                # ticketi sil
+                # validTicketId.delete()
+                return redirect('/YourAccount?reset-password=true')
+            else:
+                return redirect("user_login")
+
+
+
+        return render(request, "reset_password.html")
 
 # hesap ayarlari
 @login_required(login_url='user_login')
@@ -133,6 +189,15 @@ def user_account_setting(request):
             else:
                   context['form'] = CreateDebitCard()
           
+        # user hesap şifresini sıfırlama isteği ile mi geldi?
+        option = request.GET.get('reset-password')
+
+        if option and option == 'true':
+            # db de var mı?
+            isTicket = ResetPassword.objects.filter(user = request.user).first()
+
+            if isTicket:
+               context['removePreviousPassword'] = True
 
         return render(request, "account.html", context)
 
@@ -151,7 +216,15 @@ def change_user_setting(request):
         # gelen verileri kontrol et
         email = request.POST.get('email')
         tel = request.POST.get('tel')
-        oldPassword = request.POST.get('oldPassword')
+
+        isResetPassword = ResetPassword.objects.filter(user = request.user).first()
+
+        if isResetPassword:
+            # eski şifre gelmeyecek
+            oldPassword = request.POST.get('newPassword')
+        else:
+            # eski şifre gelecek
+            oldPassword = request.POST.get('oldPassword')
 
         if email:
             user.email = email
@@ -164,6 +237,11 @@ def change_user_setting(request):
              
              if newPassword and newPasswordConfirm and newPassword == newPasswordConfirm:
                  user.set_password(newPassword)
+
+                 # ticketi sil
+                 if isResetPassword:
+                    isResetPassword.delete()
+
              else:
                  error = True
         else:
@@ -274,6 +352,7 @@ def only_movies(request, categoryId):
 
 
 # profil seçme alanı
+@login_required(login_url='user_login')
 def user_profile_select(request):
     context = {}
 

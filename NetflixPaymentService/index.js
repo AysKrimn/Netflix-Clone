@@ -31,7 +31,7 @@ const cards = [
         cardName: "Burak Işık",
         valid: "02/23",
         cvv: 341,
-        amount: 12
+        amount: 122
     }
 ]
 

@@ -1,6 +1,8 @@
 from typing import Iterable, Optional
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+
+import random, string
 # Create your models here.
 
 
@@ -97,3 +99,19 @@ class DebitCard(models.Model):
 
     def __str__(self) -> str:
         return self.account.username
+    
+
+def generateRandomId():
+    length = 45
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str
+
+# user şifresini sıfırlayacağı zaman biz bir ticket açıcaz
+class ResetPassword(models.Model):
+    user = models.ForeignKey(NetflixUser, verbose_name=("Hesap"), on_delete=models.CASCADE)
+    tickedId = models.CharField(("Ticket"), max_length=50, default=generateRandomId, unique=True)
+
+
+    def __str__(self) -> str:
+        return "{} id: {}".format(self.user.username, self.tickedId)

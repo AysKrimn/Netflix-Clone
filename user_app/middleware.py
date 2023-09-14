@@ -12,6 +12,8 @@ def current_profile(get_response):
         if request.user.is_authenticated and cookie_id:
 
             profile = NetflixProfile.objects.filter(id = cookie_id).first()
+
+            # request'in içine selectedProfiel adında bir key atarız ve profili value olarak göndeririz.
             request.selectedProfile = profile
         
         

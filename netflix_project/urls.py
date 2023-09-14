@@ -33,6 +33,7 @@ urlpatterns = [
     path('browse', user_dashboard, name="dashboard"),
     path("login", user_login, name="user_login"),
     path("register", user_register, name="user_register"),
+    path("reset", user_reset_password, name="user_reset"),
     path("logout", user_logout, name="user_logout"),
     path('YourAccount', user_account_setting, name="user-account"),
     path('change/user/account/details', change_user_setting, name="change-user-setting"),

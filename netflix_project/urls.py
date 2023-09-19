@@ -25,6 +25,8 @@ from django.conf.urls.static import static
 from netflix_app.views import *
 from user_app.views import *
 from netflix_api.views import *
+from sql_test_app.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", index, name="home"),
@@ -42,6 +44,13 @@ urlpatterns = [
     path("genres/<categoryId>", only_movies, name="only_movies"),
     
     # userapp endpointleri biter
+
+    # sql_test_app endpointler başlar
+    path("application/test/personel", return_all_personel),
+    path("application/test/personel/delete", remove_person),
+    path("application/test/personel/create", create_person),
+    path("application/test/personel/update", update_person),
+    # sql_test_app endpointleri burada biter
 
     # api endpoints
     path("api/v1/movies/<movieId>/like", like_movie, name="like_movie"),

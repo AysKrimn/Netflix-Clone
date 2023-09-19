@@ -14,6 +14,11 @@ class NetflixProfile(models.Model):
     list = models.ManyToManyField("user_app.Movies", verbose_name=("Film/Dizi Listesi"), blank=True)
     createdAt = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = "Netflix Profili"
+        verbose_name_plural = "Netflix Profilleri"
+        ordering = ["-createdAt"]
+
     def __str__(self) -> str:
         return self.name
 # netflix user
@@ -23,6 +28,10 @@ class NetflixUser(AbstractUser):
     tel = models.CharField(("Telefon Numarası"), max_length=50, blank=True)
     is_premiumUser = models.BooleanField(("Abone mi"), default=False)
     kidProtect = models.BooleanField(("Ebeveyn Koruması"), default=False)
+
+    class Meta:
+        verbose_name = "Netflix User"
+        verbose_name_plural = "Netflix User Hesapları"
 
     def __str__(self) -> str:
         return self.username

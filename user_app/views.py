@@ -269,7 +269,7 @@ def user_dashboard(request):
     movies = {}
 
     allMovies = Movies.objects.all()
-    
+
     for movie in allMovies:
 
         movie.similar_movies

@@ -5,7 +5,7 @@
 
 <ul>
 
-    <li>Giriş yapma ve Kayıt olma sistemi</li>
+<li>Giriş yapma ve Kayıt olma sistemi</li>
     <li>E-mail doğrulama ile hesap şifresi resetleme</li>
     <li>İçerikleri izleyebilmek için üyelik satın alma</li>
     <li>İçeriklerde Ebeveyn koruması</li>
@@ -21,6 +21,6 @@
 
 <ul>
 
-    <li>Bildirim Sistemi</li>
+<li>Bildirim Sistemi</li>
 
 </ul>

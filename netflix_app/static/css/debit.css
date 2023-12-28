@@ -56,7 +56,7 @@
     font-size: 24px;
   }
   
-  .btn {
+  .btn-debit {
     background-color: #04AA6D;
     color: white;
     padding: 12px;
@@ -68,7 +68,7 @@
     font-size: 17px;
   }
   
-  .btn:hover {
+  .btn-debit:hover {
     background-color: #45a049;
   }
   

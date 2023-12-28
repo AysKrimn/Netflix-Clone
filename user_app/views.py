@@ -142,8 +142,6 @@ def user_account_setting(request):
 
     if request.method == 'POST':
 
-        testMode = True
-
         form = CreateDebitCard(request.POST)
 
         data = {
@@ -153,21 +151,22 @@ def user_account_setting(request):
 
         print("form:", data)
         # custom api servisine istek at
-        response = requests.post("http://localhost:8080/api/cards", json=data)
+        try:
 
+            response = requests.post("http://localhost:8080/api/cards", json=data)
+            if response.status_code == 200:
 
-
-        if response.status_code == 200 | testMode is True:
-
-            if testMode == False:
                 server_message = response.json()
 
                 if server_message.get('error'):
-                    # hata mesajı
+                    # hata mesajı vs
                     return redirect('user-account')
+  
+        except:
+            pass
 
-            # user bulunmuşsa:
-            if form.is_valid():
+        # user bulunmuşsa:
+        if form.is_valid():
                 instance = form.save(commit=False)
                 instance.account = request.user
                 # premimumu aktif hale getir
@@ -177,12 +176,10 @@ def user_account_setting(request):
                 instance.save()
                 # başarılı mesajı vs
                 return redirect('user-account')
-            else:
+        else:
                 print("form errors:", form.errors)
                 return redirect('user-account')
-        else:
-            # sunucu hatalarını ayıkla ve hata mesajlarını gönder (in todo list)
-            return redirect('user-account')
+
 
     else:
 

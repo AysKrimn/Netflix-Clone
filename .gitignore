@@ -1,0 +1,11 @@
+.env
+user_app/__pycache__/
+user_app/migrations
+
+netflix_app/__pycache__/
+netflix_app/migrations
+netflix_api/__pycache__/
+netflix_api/migrations
+
+db.sqlite3
+sql_test_app

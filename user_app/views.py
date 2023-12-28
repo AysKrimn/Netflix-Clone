@@ -72,12 +72,15 @@ def user_register(request):
             user.save()
 
             # mail at
-            user.email_user(
-             subject = "Netflix'e hoşgeldiniz",
-             message = f"{user.username} hesabınız başarılı bir şekilde oluşturuldu. Bizi tercih ettiğiniz için teşekkür ederiz. Hemen profil oluşturarak izlemenin keyfini çıkarın. http://127.0.0.1:8000/select/profile"
-                            
-            )
-  
+            try:
+
+                user.email_user(
+                subject = "Netflix'e hoşgeldiniz",
+                message = f"{user.username} hesabınız başarılı bir şekilde oluşturuldu. Bizi tercih ettiğiniz için teşekkür ederiz. Hemen profil oluşturarak izlemenin keyfini çıkarın. http://127.0.0.1:8000/select/profile"
+                 )
+                
+            except:
+                pass
 
 
             # mesaj gönderilebilir

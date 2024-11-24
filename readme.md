@@ -1,3 +1,5 @@
+theme: jekyll-theme-minimal
+
 <h1>Netflix Clone</h1>
 <hr>
 
